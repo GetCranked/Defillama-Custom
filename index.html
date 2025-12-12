@@ -17,11 +17,70 @@
             min-height: 100vh;
             color: #e4e4e4;
             padding: 20px;
+            padding-top: 80px;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 52, 96, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 0 20px;
+        }
+
+        .navbar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .navbar-brand {
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-link {
+            padding: 8px 16px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e4e4e4;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #00d4ff;
+        }
+
+        .nav-link .nav-icon {
+            margin-right: 6px;
         }
 
         header {
@@ -98,6 +157,7 @@
             margin-bottom: 30px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            scroll-margin-top: 80px;
         }
 
         .section h2 {
@@ -382,7 +442,123 @@
             gap: 4px;
         }
 
+        /* Expandable rows */
+        .expandable-row {
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .expandable-row:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .expandable-row td:first-child {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .expand-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8rem;
+            color: #00d4ff;
+            transition: transform 0.2s ease;
+        }
+
+        .expandable-row.expanded .expand-icon {
+            transform: translateY(-50%) rotate(90deg);
+        }
+
+        .expanded-content {
+            display: none;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .expanded-content.show {
+            display: table-row;
+        }
+
+        .expanded-content td {
+            padding: 0;
+        }
+
+        .sub-table-container {
+            padding: 15px 20px 15px 40px;
+        }
+
+        .sub-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .sub-table th {
+            background: rgba(0, 212, 255, 0.1);
+            font-size: 0.75rem;
+            padding: 10px 8px;
+            color: #00d4ff;
+        }
+
+        .sub-table td {
+            padding: 10px 8px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sub-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .sub-table .protocol-logo {
+            width: 22px;
+            height: 22px;
+        }
+
+        .sub-table-title {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sub-table-title strong {
+            color: #00d4ff;
+        }
+
+        .no-data {
+            color: #666;
+            font-style: italic;
+            padding: 20px;
+            text-align: center;
+        }
+
         @media (max-width: 768px) {
+            body {
+                padding-top: 120px;
+            }
+
+            .navbar-content {
+                flex-direction: column;
+                height: auto;
+                padding: 10px 0;
+                gap: 10px;
+            }
+
+            .navbar-links {
+                gap: 5px;
+            }
+
+            .nav-link {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+
             header h1 {
                 font-size: 1.8rem;
             }
@@ -404,10 +580,26 @@
             .tvl-bar-container {
                 width: 60px;
             }
+
+            .sub-table-container {
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-brand">DeFi TVL Tracker</div>
+            <div class="navbar-links">
+                <a href="#protocols-section" class="nav-link"><span class="nav-icon">🚀</span>Protocols</a>
+                <a href="#categories-section" class="nav-link"><span class="nav-icon">📊</span>Categories</a>
+                <a href="#chains-section" class="nav-link"><span class="nav-icon">⛓️</span>Chains</a>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
         <header>
             <h1>DeFi TVL Growth Tracker</h1>
@@ -448,17 +640,7 @@
             </div>
         </div>
 
-        <div class="section">
-            <h2><span class="section-icon">📊</span> Category Performance</h2>
-            <div class="table-container" id="categoriesContainer">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading categories...</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
+        <div class="section" id="protocols-section">
             <h2><span class="section-icon">🚀</span> Top Growing Protocols (TVL ≥ $1M)</h2>
             <div class="table-container" id="protocolsContainer">
                 <div class="loading">
@@ -468,8 +650,18 @@
             </div>
         </div>
 
-        <div class="section">
-            <h2><span class="section-icon">⛓️</span> Top Growing Chains (TVL ≥ $10M)</h2>
+        <div class="section" id="categories-section">
+            <h2><span class="section-icon">📊</span> Category Performance (Click to expand)</h2>
+            <div class="table-container" id="categoriesContainer">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading categories...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="chains-section">
+            <h2><span class="section-icon">⛓️</span> Top Growing Chains (Click to expand)</h2>
             <div class="table-container" id="chainsContainer">
                 <div class="loading">
                     <div class="spinner"></div>
@@ -490,7 +682,8 @@
         const CONFIG = {
             PROTOCOL_MIN_TVL: 1_000_000,
             CHAIN_MIN_TVL: 10_000_000,
-            TOP_RESULTS: 50
+            TOP_RESULTS: 50,
+            TOP_SUB_RESULTS: 5
         };
 
         // Category icons mapping
@@ -574,6 +767,8 @@
         let rawProtocols = null;
         let rawChains = null;
         let isLoading = false;
+        let expandedChains = new Set();
+        let expandedCategories = new Set();
 
         const sortState = {
             protocols: { column: 'change', direction: 'desc' },
@@ -652,7 +847,6 @@
             const field = getChangeField(timeframe);
             const categoryMap = new Map();
 
-            // Only include protocols that meet the minimum TVL and have valid change data
             protocols
                 .filter(p => p.tvl >= CONFIG.PROTOCOL_MIN_TVL && p[field] != null)
                 .forEach(p => {
@@ -675,7 +869,6 @@
                     cat.protocols.push(p.name);
                 });
 
-            // Calculate weighted average change for each category
             return Array.from(categoryMap.values())
                 .map(cat => ({
                     name: cat.name,
@@ -687,13 +880,54 @@
                 .filter(cat => cat.tvl > 0);
         }
 
+        function getTopProtocolsForChain(chainName, limit = CONFIG.TOP_SUB_RESULTS) {
+            if (!rawProtocols) return [];
+            const field = getChangeField(currentTimeframe);
+            
+            return rawProtocols
+                .filter(p => {
+                    const chains = p.chains || [];
+                    return chains.includes(chainName) && p.tvl >= CONFIG.PROTOCOL_MIN_TVL && p[field] != null;
+                })
+                .map(p => ({
+                    name: p.name,
+                    slug: p.slug,
+                    logo: p.logo || 'https://icons.llama.fi/missing.png',
+                    tvl: p.tvl,
+                    change: p[field],
+                    category: p.category || 'Other'
+                }))
+                .sort((a, b) => b.change - a.change)
+                .slice(0, limit);
+        }
+
+        function getTopProtocolsForCategory(categoryName, limit = CONFIG.TOP_SUB_RESULTS) {
+            if (!rawProtocols) return [];
+            const field = getChangeField(currentTimeframe);
+            
+            return rawProtocols
+                .filter(p => {
+                    const category = p.category || 'Other';
+                    return category === categoryName && p.tvl >= CONFIG.PROTOCOL_MIN_TVL && p[field] != null;
+                })
+                .map(p => ({
+                    name: p.name,
+                    slug: p.slug,
+                    logo: p.logo || 'https://icons.llama.fi/missing.png',
+                    tvl: p.tvl,
+                    change: p[field],
+                    category: p.category || 'Other'
+                }))
+                .sort((a, b) => b.change - a.change)
+                .slice(0, limit);
+        }
+
         // ============ SORTING ============
         function sortData(data, sortCol, sortDir) {
             return [...data].sort((a, b) => {
                 let aVal = a[sortCol];
                 let bVal = b[sortCol];
 
-                // Handle string columns with case-insensitive sorting
                 if (sortCol === 'name' || sortCol === 'category') {
                     aVal = (aVal || '').toLowerCase();
                     bVal = (bVal || '').toLowerCase();
@@ -702,11 +936,50 @@
                     return 0;
                 }
 
-                // Handle numeric columns
                 aVal = aVal || 0;
                 bVal = bVal || 0;
                 return sortDir === 'asc' ? aVal - bVal : bVal - aVal;
             });
+        }
+
+        // ============ SUB-TABLE RENDERING ============
+        function renderSubTable(protocols, title) {
+            if (protocols.length === 0) {
+                return `<div class="no-data">No protocols found with significant TVL change</div>`;
+            }
+
+            const rows = protocols.map((p, i) => `
+                <tr>
+                    <td class="rank">#${i + 1}</td>
+                    <td>
+                        <div class="protocol-name">
+                            <img class="protocol-logo" src="${escapeHtml(p.logo)}" alt="${escapeHtml(p.name)}" onerror="this.onerror=null; this.src='https://icons.llama.fi/missing.png'">
+                            <a href="https://defillama.com/protocol/${escapeHtml(p.slug)}" target="_blank">${escapeHtml(p.name)}</a>
+                        </div>
+                    </td>
+                    <td class="tvl">${formatTVL(p.tvl)}</td>
+                    <td><span class="change ${getChangeClass(p.change)}">${formatPercent(p.change)}</span></td>
+                    <td>${escapeHtml(p.category)}</td>
+                </tr>
+            `).join('');
+
+            return `
+                <div class="sub-table-title">
+                    <span>📈</span> Top 5 TVL Gainers in <strong>${escapeHtml(title)}</strong>
+                </div>
+                <table class="sub-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Protocol</th>
+                            <th>TVL</th>
+                            <th>Change</th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
         }
 
         // ============ RENDERING ============
@@ -720,14 +993,19 @@
 
             const rows = sorted.map((c, i) => {
                 const barWidth = maxTvl > 0 ? (c.tvl / maxTvl) * 100 : 0;
+                const isExpanded = expandedCategories.has(c.name);
+                const topProtocols = isExpanded ? getTopProtocolsForCategory(c.name) : [];
                 
                 return `
-                    <tr>
-                        <td class="rank">#${i + 1}</td>
+                    <tr class="expandable-row ${isExpanded ? 'expanded' : ''}" data-category="${escapeHtml(c.name)}">
+                        <td class="rank">
+                            <span class="expand-icon">▶</span>
+                            #${i + 1}
+                        </td>
                         <td>
                             <div class="category-name">
                                 <span class="category-icon">${getCategoryIcon(c.name)}</span>
-                                <a class="category-link" href="https://defillama.com/protocols/${getCategorySlug(c.name)}" target="_blank">
+                                <a class="category-link" href="https://defillama.com/protocols/${getCategorySlug(c.name)}" target="_blank" onclick="event.stopPropagation()">
                                     ${escapeHtml(c.name)}
                                 </a>
                             </div>
@@ -742,6 +1020,13 @@
                         </td>
                         <td><span class="change ${getChangeClass(c.change)}">${formatPercent(c.change)}</span></td>
                         <td><span class="protocol-count">${c.protocolCount}</span></td>
+                    </tr>
+                    <tr class="expanded-content ${isExpanded ? 'show' : ''}" data-category-content="${escapeHtml(c.name)}">
+                        <td colspan="5">
+                            <div class="sub-table-container">
+                                ${isExpanded ? renderSubTable(topProtocols, c.name) : ''}
+                            </div>
+                        </td>
                     </tr>
                 `;
             }).join('');
@@ -814,15 +1099,30 @@
                 return '<div class="loading"><p>No chains found matching criteria.</p></div>';
             }
 
-            const rows = sorted.map((c, i) => `
-                <tr>
-                    <td class="rank">#${i + 1}</td>
-                    <td><a href="https://defillama.com/chain/${escapeHtml(c.slug)}" target="_blank">${escapeHtml(c.name)}</a></td>
-                    <td class="tvl">${formatTVL(c.tvl)}</td>
-                    <td><span class="change ${getChangeClass(c.change)}">${formatPercent(c.change)}</span></td>
-                    <td>${escapeHtml(c.tokenSymbol)}</td>
-                </tr>
-            `).join('');
+            const rows = sorted.map((c, i) => {
+                const isExpanded = expandedChains.has(c.name);
+                const topProtocols = isExpanded ? getTopProtocolsForChain(c.name) : [];
+                
+                return `
+                    <tr class="expandable-row ${isExpanded ? 'expanded' : ''}" data-chain="${escapeHtml(c.name)}">
+                        <td class="rank">
+                            <span class="expand-icon">▶</span>
+                            #${i + 1}
+                        </td>
+                        <td><a href="https://defillama.com/chain/${escapeHtml(c.slug)}" target="_blank" onclick="event.stopPropagation()">${escapeHtml(c.name)}</a></td>
+                        <td class="tvl">${formatTVL(c.tvl)}</td>
+                        <td><span class="change ${getChangeClass(c.change)}">${formatPercent(c.change)}</span></td>
+                        <td>${escapeHtml(c.tokenSymbol)}</td>
+                    </tr>
+                    <tr class="expanded-content ${isExpanded ? 'show' : ''}" data-chain-content="${escapeHtml(c.name)}">
+                        <td colspan="5">
+                            <div class="sub-table-container">
+                                ${isExpanded ? renderSubTable(topProtocols, c.name) : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
 
             return `
                 <table id="chainsTable">
@@ -855,14 +1155,28 @@
 
         // ============ EVENT HANDLERS ============
         document.getElementById('categoriesContainer').addEventListener('click', e => {
+            // Handle sorting
             const th = e.target.closest('th.sortable');
-            if (!th) return;
+            if (th) {
+                const col = th.dataset.col;
+                const isSameColumn = sortState.categories.column === col;
+                sortState.categories.direction = isSameColumn && sortState.categories.direction === 'desc' ? 'asc' : 'desc';
+                sortState.categories.column = col;
+                renderAll();
+                return;
+            }
 
-            const col = th.dataset.col;
-            const isSameColumn = sortState.categories.column === col;
-            sortState.categories.direction = isSameColumn && sortState.categories.direction === 'desc' ? 'asc' : 'desc';
-            sortState.categories.column = col;
-            renderAll();
+            // Handle row expansion
+            const row = e.target.closest('.expandable-row');
+            if (row && !e.target.closest('a')) {
+                const category = row.dataset.category;
+                if (expandedCategories.has(category)) {
+                    expandedCategories.delete(category);
+                } else {
+                    expandedCategories.add(category);
+                }
+                renderAll();
+            }
         });
 
         document.getElementById('protocolsContainer').addEventListener('click', e => {
@@ -877,14 +1191,40 @@
         });
 
         document.getElementById('chainsContainer').addEventListener('click', e => {
+            // Handle sorting
             const th = e.target.closest('th.sortable');
-            if (!th) return;
+            if (th) {
+                const col = th.dataset.col;
+                const isSameColumn = sortState.chains.column === col;
+                sortState.chains.direction = isSameColumn && sortState.chains.direction === 'desc' ? 'asc' : 'desc';
+                sortState.chains.column = col;
+                renderAll();
+                return;
+            }
 
-            const col = th.dataset.col;
-            const isSameColumn = sortState.chains.column === col;
-            sortState.chains.direction = isSameColumn && sortState.chains.direction === 'desc' ? 'asc' : 'desc';
-            sortState.chains.column = col;
-            renderAll();
+            // Handle row expansion
+            const row = e.target.closest('.expandable-row');
+            if (row && !e.target.closest('a')) {
+                const chain = row.dataset.chain;
+                if (expandedChains.has(chain)) {
+                    expandedChains.delete(chain);
+                } else {
+                    expandedChains.add(chain);
+                }
+                renderAll();
+            }
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
         });
 
         // ============ MAIN RENDER ============
@@ -895,16 +1235,16 @@
             const processedChains = processChains(rawChains, currentTimeframe);
             const processedCategories = processCategories(rawProtocols, currentTimeframe);
 
-            document.getElementById('categoriesContainer').innerHTML = renderCategoriesTable(
-                processedCategories,
-                sortState.categories.column,
-                sortState.categories.direction
-            );
-
             document.getElementById('protocolsContainer').innerHTML = renderProtocolsTable(
                 processedProtocols,
                 sortState.protocols.column,
                 sortState.protocols.direction
+            );
+
+            document.getElementById('categoriesContainer').innerHTML = renderCategoriesTable(
+                processedCategories,
+                sortState.categories.column,
+                sortState.categories.direction
             );
 
             document.getElementById('chainsContainer').innerHTML = renderChainsTable(
@@ -920,8 +1260,8 @@
         async function loadData(forceRefresh = false) {
             if (isLoading) return;
 
-            const catC = document.getElementById('categoriesContainer');
             const pc = document.getElementById('protocolsContainer');
+            const catC = document.getElementById('categoriesContainer');
             const cc = document.getElementById('chainsContainer');
             const refreshBtn = document.getElementById('refreshBtn');
 
@@ -937,7 +1277,11 @@
                             <p>Loading data from DefiLlama...</p>
                         </div>
                     `;
-                    catC.innerHTML = pc.innerHTML = cc.innerHTML = loadingHtml;
+                    pc.innerHTML = catC.innerHTML = cc.innerHTML = loadingHtml;
+
+                    // Clear expanded states on refresh
+                    expandedChains.clear();
+                    expandedCategories.clear();
 
                     const [protocolsResponse, chainsResponse] = await Promise.all([
                         fetch('https://api.llama.fi/protocols'),
@@ -963,7 +1307,7 @@
                         <button class="retry-btn" onclick="loadData(true)">↻ Retry</button>
                     </div>
                 `;
-                catC.innerHTML = pc.innerHTML = cc.innerHTML = errorHtml;
+                pc.innerHTML = catC.innerHTML = cc.innerHTML = errorHtml;
             } finally {
                 isLoading = false;
                 refreshBtn.disabled = false;
