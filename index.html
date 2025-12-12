@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             min-height: 100vh;
             color: #e4e4e4;
@@ -71,6 +71,26 @@
             font-weight: bold;
         }
 
+        .refresh-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .refresh-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .section {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 16px;
@@ -86,10 +106,6 @@
             display: flex;
             align-items: center;
             gap: 10px;
-        }
-
-        .section h2 .icon {
-            font-size: 1.8rem;
         }
 
         .loading {
@@ -118,7 +134,7 @@
         }
 
         th, td {
-            padding: 16px 12px;
+            padding: 14px 10px;
             text-align: left;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -127,9 +143,38 @@
             background: rgba(0, 0, 0, 0.3);
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             letter-spacing: 0.5px;
             color: #00d4ff;
+            user-select: none;
+            position: relative;
+        }
+
+        th.sortable {
+            cursor: pointer;
+            padding-right: 25px;
+        }
+
+        th.sortable:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        th.sortable::after {
+            content: '⇅';
+            position: absolute;
+            right: 8px;
+            opacity: 0.3;
+            font-size: 0.9rem;
+        }
+
+        th.sort-asc::after {
+            content: '↑';
+            opacity: 1;
+        }
+
+        th.sort-desc::after {
+            content: '↓';
+            opacity: 1;
         }
 
         tr:hover {
@@ -145,14 +190,25 @@
         .protocol-name {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+        }
+
+        .protocol-name a {
+            color: #e4e4e4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .protocol-name a:hover {
+            color: #00d4ff;
         }
 
         .protocol-logo {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
+            object-fit: contain;
         }
 
         .tvl {
@@ -176,37 +232,54 @@
             color: #ff4444;
         }
 
+        .change.neutral {
+            background: rgba(255, 255, 255, 0.1);
+            color: #888;
+        }
+
         .chains-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
-            max-width: 300px;
+            gap: 4px;
+            max-width: 220px;
         }
 
         .chain-tag {
             background: rgba(123, 44, 191, 0.3);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
             white-space: nowrap;
-        }
-
-        .chain-tag.highlight {
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
-            color: #fff;
-            font-weight: bold;
         }
 
         .error {
             text-align: center;
             padding: 40px;
             color: #ff4444;
+            background: rgba(255, 68, 68, 0.1);
+            border-radius: 8px;
+        }
+
+        .retry-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .stats-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
             margin-bottom: 30px;
         }
 
@@ -219,7 +292,7 @@
         }
 
         .stat-card .value {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: bold;
             background: linear-gradient(90deg, #00d4ff, #7b2cbf);
             -webkit-background-clip: text;
@@ -230,30 +303,11 @@
         .stat-card .label {
             color: #888;
             margin-top: 8px;
+            font-size: 0.85rem;
         }
 
         .table-container {
             overflow-x: auto;
-        }
-
-        .refresh-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
-            color: #fff;
-            cursor: pointer;
-            font-size: 1rem;
-            margin-left: 20px;
-        }
-
-        .refresh-btn:hover {
-            opacity: 0.9;
-        }
-
-        .refresh-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
         }
 
         .last-updated {
@@ -279,18 +333,18 @@
                 font-size: 1.8rem;
             }
 
-            .controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
             th, td {
-                padding: 12px 8px;
-                font-size: 0.9rem;
+                padding: 10px 6px;
+                font-size: 0.8rem;
             }
 
             .chains-list {
-                max-width: 150px;
+                max-width: 100px;
+            }
+
+            .protocol-logo {
+                width: 22px;
+                height: 22px;
             }
         }
     </style>
@@ -298,53 +352,52 @@
 <body>
     <div class="container">
         <header>
-            <h1>📈 DeFi TVL Growth Tracker</h1>
+            <h1>DeFi TVL Growth Tracker</h1>
             <p>Track protocols and chains with the highest TVL growth</p>
         </header>
 
         <div class="controls">
-            <button class="timeframe-btn active" data-timeframe="1">24 Hours</button>
-            <button class="timeframe-btn" data-timeframe="7">7 Days</button>
-            <button class="timeframe-btn" data-timeframe="30">1 Month</button>
-            <button class="timeframe-btn" data-timeframe="180">6 Months</button>
-            <button class="refresh-btn" id="refreshBtn">🔄 Refresh Data</button>
+            <button class="timeframe-btn active" data-timeframe="1d">24 Hours</button>
+            <button class="timeframe-btn" data-timeframe="7d">7 Days</button>
+            <button class="timeframe-btn" data-timeframe="30d">1 Month</button>
+            <button class="refresh-btn" id="refreshBtn">↻ Refresh</button>
         </div>
 
-        <div class="stats-row" id="statsRow">
+        <div class="stats-row">
             <div class="stat-card">
                 <div class="value" id="totalProtocols">-</div>
-                <div class="label">Protocols Tracked</div>
+                <div class="label">Protocols (≥$1M)</div>
             </div>
             <div class="stat-card">
                 <div class="value" id="totalChains">-</div>
-                <div class="label">Chains Tracked</div>
-            </div>
-            <div class="stat-card">
-                <div class="value" id="avgGrowth">-</div>
-                <div class="label">Avg Protocol Growth</div>
+                <div class="label">Chains (≥$10M)</div>
             </div>
             <div class="stat-card">
                 <div class="value" id="topGrowth">-</div>
                 <div class="label">Top Protocol Growth</div>
             </div>
+            <div class="stat-card">
+                <div class="value" id="topChainGrowth">-</div>
+                <div class="label">Top Chain Growth</div>
+            </div>
         </div>
 
         <div class="section">
-            <h2><span class="icon">🏆</span> Top Growing Protocols (TVL ≥ $1M)</h2>
+            <h2>Top Growing Protocols (TVL ≥ $1M)</h2>
             <div class="table-container" id="protocolsContainer">
                 <div class="loading">
                     <div class="spinner"></div>
-                    <p>Loading protocol data...</p>
+                    <p>Loading protocols...</p>
                 </div>
             </div>
         </div>
 
         <div class="section">
-            <h2><span class="icon">⛓️</span> Top Growing Chains (TVL ≥ $10M)</h2>
+            <h2>Top Growing Chains (TVL ≥ $10M)</h2>
             <div class="table-container" id="chainsContainer">
                 <div class="loading">
                     <div class="spinner"></div>
-                    <p>Loading chain data...</p>
+                    <p>Loading chains...</p>
                 </div>
             </div>
         </div>
@@ -352,64 +405,81 @@
         <p class="last-updated" id="lastUpdated"></p>
 
         <footer>
-            <p>Data provided by <a href="https://defillama.com" target="_blank">DefiLlama API</a></p>
-            <p style="margin-top: 10px;">Built with ❤️ for the DeFi community</p>
+            <p>Data from <a href="https://defillama.com" target="_blank">DefiLlama API</a> • Built with ❤️ for DeFi degens</p>
         </footer>
     </div>
 
     <script>
-        // Configuration
+        // ============ CONFIGURATION ============
         const CONFIG = {
-            PROTOCOL_MIN_TVL: 1_000_000,  // $1M
-            CHAIN_MIN_TVL: 10_000_000,     // $10M
-            TOP_RESULTS: 50,
-            CACHE_DURATION: 5 * 60 * 1000  // 5 minutes
+            PROTOCOL_MIN_TVL: 1_000_000,
+            CHAIN_MIN_TVL: 10_000_000,
+            TOP_RESULTS: 50
         };
 
-        // State
-        let state = {
-            protocols: [],
-            chains: [],
-            currentTimeframe: 1,
-            lastFetch: null,
-            isLoading: false
+        // Chain name → DefiLlama slug mapping
+        const CHAIN_SLUGS = {
+            'Ethereum': 'ethereum',
+            'Tron': 'tron',
+            'BSC': 'bsc',
+            'BNB Chain': 'bsc',
+            'Polygon': 'polygon',
+            'Arbitrum': 'arbitrum',
+            'Optimism': 'optimism',
+            'Base': 'base',
+            'Avalanche': 'avalanche',
+            'Solana': 'solana',
+            'Fantom': 'fantom',
+            'zkSync Era': 'zksync-era',
+            'Linea': 'linea',
+            'Scroll': 'scroll',
+            'Mantle': 'mantle',
+            'Blast': 'blast',
+            'Metis': 'metis',
+            'Mode': 'mode',
+            'Cronos': 'cronos',
+            'Kava': 'kava',
+            'Celo': 'celo',
+            'Gnosis': 'gnosis',
+            'Harmony': 'harmony',
+            'Moonbeam': 'moonbeam',
+            'Moonriver': 'moonriver',
+            'Astar': 'astar',
+            'Injective': 'injective',
+            'Starknet': 'starknet',
+            'Sui': 'sui',
+            'Aptos': 'aptos',
+            'Cardano': 'cardano',
+            'TON': 'ton',
+            'Near': 'near',
+            'Cosmos': 'cosmos',
+            'Osmosis': 'osmosis'
         };
 
-        // API Functions
-        const API = {
-            baseUrl: 'https://api.llama.fi',
+        // ============ STATE ============
+        let currentTimeframe = '1d';
+        let rawProtocols = null;
+        let rawChains = null;
+        let isLoading = false;
 
-            async fetchProtocols() {
-                const response = await fetch(`${this.baseUrl}/protocols`);
-                if (!response.ok) throw new Error('Failed to fetch protocols');
-                return response.json();
-            },
-
-            async fetchChains() {
-                const response = await fetch(`${this.baseUrl}/v2/chains`);
-                if (!response.ok) throw new Error('Failed to fetch chains');
-                return response.json();
-            },
-
-            async fetchProtocolTvl(slug) {
-                const response = await fetch(`${this.baseUrl}/protocol/${slug}`);
-                if (!response.ok) throw new Error(`Failed to fetch protocol: ${slug}`);
-                return response.json();
-            },
-
-            async fetchChainTvl(chain) {
-                const response = await fetch(`${this.baseUrl}/v2/historicalChainTvl/${chain}`);
-                if (!response.ok) throw new Error(`Failed to fetch chain: ${chain}`);
-                return response.json();
-            }
+        const sortState = {
+            protocols: { column: 'change', direction: 'desc' },
+            chains: { column: 'change', direction: 'desc' }
         };
 
-        // Utility Functions
-        function formatNumber(num) {
+        // ============ UTILITIES ============
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatTVL(num) {
+            if (!num || isNaN(num)) return '$0';
             if (num >= 1e9) return `$${(num / 1e9).toFixed(2)}B`;
             if (num >= 1e6) return `$${(num / 1e6).toFixed(2)}M`;
             if (num >= 1e3) return `$${(num / 1e3).toFixed(2)}K`;
-            return `$${num.toFixed(2)}`;
+            return `$${num.toFixed(0)}`;
         }
 
         function formatPercent(num) {
@@ -418,389 +488,275 @@
             return `${sign}${num.toFixed(2)}%`;
         }
 
-        function getTimeframeDate(days) {
-            const date = new Date();
-            date.setDate(date.getDate() - days);
-            return Math.floor(date.getTime() / 1000);
+        function getChangeClass(num) {
+            if (num === null || num === undefined || isNaN(num)) return 'neutral';
+            return num >= 0 ? 'positive' : 'negative';
         }
 
-        function findClosestDataPoint(data, targetTimestamp) {
-            if (!data || data.length === 0) return null;
-            
-            let closest = data[0];
-            let minDiff = Math.abs(data[0].date - targetTimestamp);
-            
-            for (const point of data) {
-                const diff = Math.abs(point.date - targetTimestamp);
-                if (diff < minDiff) {
-                    minDiff = diff;
-                    closest = point;
+        function getChangeField(timeframe) {
+            return timeframe === '1d' ? 'change_1d' : timeframe === '7d' ? 'change_7d' : 'change_1m';
+        }
+
+        // ============ DATA PROCESSING ============
+        function processProtocols(protocols, timeframe) {
+            const field = getChangeField(timeframe);
+            return protocols
+                .filter(p => p.tvl >= CONFIG.PROTOCOL_MIN_TVL && p[field] != null)
+                .map(p => ({
+                    name: p.name,
+                    slug: p.slug,
+                    logo: p.logo || 'https://icons.llama.fi/missing.png',
+                    tvl: p.tvl,
+                    chains: p.chains || [],
+                    change: p[field],
+                    category: p.category || 'Other'
+                }));
+        }
+
+        function processChains(chains, timeframe) {
+            const field = getChangeField(timeframe);
+            return chains
+                .filter(c => c.tvl >= CONFIG.CHAIN_MIN_TVL && c[field] != null)
+                .map(c => ({
+                    name: c.name,
+                    slug: CHAIN_SLUGS[c.name] || c.name.toLowerCase().replace(/\s+/g, '-'),
+                    tvl: c.tvl,
+                    change: c[field],
+                    tokenSymbol: c.tokenSymbol || '-'
+                }));
+        }
+
+        // ============ SORTING ============
+        function sortData(data, sortCol, sortDir) {
+            return [...data].sort((a, b) => {
+                let aVal = a[sortCol];
+                let bVal = b[sortCol];
+
+                // Handle string columns with case-insensitive sorting
+                if (sortCol === 'name' || sortCol === 'category') {
+                    aVal = (aVal || '').toLowerCase();
+                    bVal = (bVal || '').toLowerCase();
+                    if (aVal < bVal) return sortDir === 'asc' ? -1 : 1;
+                    if (aVal > bVal) return sortDir === 'asc' ? 1 : -1;
+                    return 0;
                 }
-            }
-            
-            // Only return if within 2 days of target
-            if (minDiff > 2 * 24 * 60 * 60) return null;
-            return closest;
+
+                // Handle numeric columns
+                aVal = aVal || 0;
+                bVal = bVal || 0;
+                return sortDir === 'asc' ? aVal - bVal : bVal - aVal;
+            });
         }
 
-        function calculateChange(currentTvl, historicalTvl) {
-            if (!historicalTvl || historicalTvl === 0) return null;
-            return ((currentTvl - historicalTvl) / historicalTvl) * 100;
-        }
+        // ============ RENDERING ============
+        function renderProtocolsTable(data, sortCol, sortDir) {
+            const sorted = sortData(data, sortCol, sortDir).slice(0, CONFIG.TOP_RESULTS);
 
-        // Data Processing
-        async function processProtocols(protocols, timeframeDays) {
-            const targetTimestamp = getTimeframeDate(timeframeDays);
-            const results = [];
-            
-            // Filter protocols by minimum TVL first
-            const eligibleProtocols = protocols.filter(p => p.tvl >= CONFIG.PROTOCOL_MIN_TVL);
-            
-            // Process in batches to avoid rate limiting
-            const batchSize = 10;
-            const batches = [];
-            
-            for (let i = 0; i < Math.min(eligibleProtocols.length, 200); i += batchSize) {
-                batches.push(eligibleProtocols.slice(i, i + batchSize));
+            if (sorted.length === 0) {
+                return '<div class="loading"><p>No protocols found matching criteria.</p></div>';
             }
 
-            for (const batch of batches) {
-                const batchResults = await Promise.all(
-                    batch.map(async (protocol) => {
-                        try {
-                            const details = await API.fetchProtocolTvl(protocol.slug);
-                            const historicalData = details.tvl || [];
-                            const historicalPoint = findClosestDataPoint(historicalData, targetTimestamp);
-                            
-                            if (!historicalPoint) return null;
-                            
-                            const change = calculateChange(protocol.tvl, historicalPoint.totalLiquidityUSD);
-                            
-                            // Calculate per-chain changes
-                            const chainChanges = {};
-                            const chains = protocol.chains || [];
-                            
-                            if (details.chainTvls) {
-                                for (const chain of chains) {
-                                    const chainData = details.chainTvls[chain]?.tvl || [];
-                                    const chainHistorical = findClosestDataPoint(chainData, targetTimestamp);
-                                    const currentChainTvl = details.currentChainTvls?.[chain] || 0;
-                                    
-                                    if (chainHistorical && currentChainTvl > 0) {
-                                        chainChanges[chain] = {
-                                            change: calculateChange(currentChainTvl, chainHistorical.totalLiquidityUSD),
-                                            currentTvl: currentChainTvl
-                                        };
-                                    }
-                                }
-                            }
-
-                            // Find chain with highest growth
-                            let topChain = null;
-                            let topChainChange = -Infinity;
-                            
-                            for (const [chain, data] of Object.entries(chainChanges)) {
-                                if (data.change !== null && data.change > topChainChange) {
-                                    topChainChange = data.change;
-                                    topChain = chain;
-                                }
-                            }
-
-                            return {
-                                name: protocol.name,
-                                slug: protocol.slug,
-                                logo: protocol.logo,
-                                tvl: protocol.tvl,
-                                chains: chains,
-                                change: change,
-                                topChain: topChain,
-                                topChainChange: topChainChange !== -Infinity ? topChainChange : null,
-                                chainChanges: chainChanges
-                            };
-                        } catch (error) {
-                            console.error(`Error processing ${protocol.name}:`, error);
-                            return null;
-                        }
-                    })
-                );
-                
-                results.push(...batchResults.filter(r => r !== null && r.change !== null));
-                
-                // Small delay between batches
-                await new Promise(resolve => setTimeout(resolve, 100));
-            }
-
-            // Sort by change percentage (highest first)
-            return results
-                .sort((a, b) => b.change - a.change)
-                .slice(0, CONFIG.TOP_RESULTS);
-        }
-
-        async function processChains(chains, timeframeDays) {
-            const targetTimestamp = getTimeframeDate(timeframeDays);
-            const results = [];
-            
-            // Filter chains by minimum TVL
-            const eligibleChains = chains.filter(c => c.tvl >= CONFIG.CHAIN_MIN_TVL);
-            
-            // Process in batches
-            const batchSize = 5;
-            const batches = [];
-            
-            for (let i = 0; i < eligibleChains.length; i += batchSize) {
-                batches.push(eligibleChains.slice(i, i + batchSize));
-            }
-
-            for (const batch of batches) {
-                const batchResults = await Promise.all(
-                    batch.map(async (chain) => {
-                        try {
-                            const historicalData = await API.fetchChainTvl(chain.name);
-                            const historicalPoint = findClosestDataPoint(historicalData, targetTimestamp);
-                            
-                            if (!historicalPoint) return null;
-                            
-                            const change = calculateChange(chain.tvl, historicalPoint.tvl);
-                            
-                            return {
-                                name: chain.name,
-                                tvl: chain.tvl,
-                                change: change,
-                                tokenSymbol: chain.tokenSymbol
-                            };
-                        } catch (error) {
-                            console.error(`Error processing chain ${chain.name}:`, error);
-                            return null;
-                        }
-                    })
-                );
-                
-                results.push(...batchResults.filter(r => r !== null && r.change !== null));
-                
-                await new Promise(resolve => setTimeout(resolve, 100));
-            }
-
-            return results
-                .sort((a, b) => b.change - a.change)
-                .slice(0, CONFIG.TOP_RESULTS);
-        }
-
-        // UI Rendering
-        function renderProtocolsTable(protocols) {
-            if (protocols.length === 0) {
-                return `<div class="error">No protocol data available for this timeframe</div>`;
-            }
-
-            const rows = protocols.map((protocol, index) => {
-                const changeClass = protocol.change >= 0 ? 'positive' : 'negative';
-                const chainsHtml = protocol.chains.slice(0, 5).map(chain => {
-                    const isTop = chain === protocol.topChain;
-                    return `<span class="chain-tag ${isTop ? 'highlight' : ''}">${chain}${isTop ? ' ⭐' : ''}</span>`;
-                }).join('');
-                
-                const moreChains = protocol.chains.length > 5 ? 
-                    `<span class="chain-tag">+${protocol.chains.length - 5} more</span>` : '';
-
-                return `
-                    <tr>
-                        <td class="rank">#${index + 1}</td>
-                        <td>
-                            <div class="protocol-name">
-                                <img class="protocol-logo" src="${protocol.logo}" alt="${protocol.name}" 
-                                     onerror="this.style.display='none'">
-                                <span>${protocol.name}</span>
-                            </div>
-                        </td>
-                        <td class="tvl">${formatNumber(protocol.tvl)}</td>
-                        <td><span class="change ${changeClass}">${formatPercent(protocol.change)}</span></td>
-                        <td>
-                            <div class="chains-list">
-                                ${chainsHtml}
-                                ${moreChains}
-                            </div>
-                        </td>
-                        <td>
-                            ${protocol.topChain ? 
-                                `<strong>${protocol.topChain}</strong><br>
-                                 <span class="change ${protocol.topChainChange >= 0 ? 'positive' : 'negative'}">
-                                    ${formatPercent(protocol.topChainChange)}
-                                 </span>` 
-                                : 'N/A'}
-                        </td>
-                    </tr>
-                `;
-            }).join('');
+            const rows = sorted.map((p, i) => `
+                <tr>
+                    <td class="rank">#${i + 1}</td>
+                    <td>
+                        <div class="protocol-name">
+                            <img class="protocol-logo" src="${escapeHtml(p.logo)}" alt="${escapeHtml(p.name)}" onerror="this.onerror=null; this.src='https://icons.llama.fi/missing.png'">
+                            <a href="https://defillama.com/protocol/${escapeHtml(p.slug)}" target="_blank">${escapeHtml(p.name)}</a>
+                        </div>
+                    </td>
+                    <td class="tvl">${formatTVL(p.tvl)}</td>
+                    <td><span class="change ${getChangeClass(p.change)}">${formatPercent(p.change)}</span></td>
+                    <td>
+                        <div class="chains-list">
+                            ${p.chains.slice(0, 3).map(c => `<span class="chain-tag">${escapeHtml(c)}</span>`).join('')}
+                            ${p.chains.length > 3 ? `<span class="chain-tag">+${p.chains.length - 3}</span>` : ''}
+                        </div>
+                    </td>
+                    <td>${escapeHtml(p.category)}</td>
+                </tr>
+            `).join('');
 
             return `
-                <table>
+                <table id="protocolsTable">
                     <thead>
                         <tr>
                             <th>Rank</th>
-                            <th>Protocol</th>
-                            <th>Current TVL</th>
-                            <th>TVL Change</th>
+                            <th class="sortable ${sortCol === 'name' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="name">Protocol</th>
+                            <th class="sortable ${sortCol === 'tvl' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="tvl">TVL</th>
+                            <th class="sortable ${sortCol === 'change' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="change">Change</th>
                             <th>Chains</th>
-                            <th>Top Growing Chain</th>
+                            <th class="sortable ${sortCol === 'category' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="category">Category</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        ${rows}
-                    </tbody>
+                    <tbody>${rows}</tbody>
                 </table>
             `;
         }
 
-        function renderChainsTable(chains) {
-            if (chains.length === 0) {
-                return `<div class="error">No chain data available for this timeframe</div>`;
+        function renderChainsTable(data, sortCol, sortDir) {
+            const sorted = sortData(data, sortCol, sortDir).slice(0, CONFIG.TOP_RESULTS);
+
+            if (sorted.length === 0) {
+                return '<div class="loading"><p>No chains found matching criteria.</p></div>';
             }
 
-            const rows = chains.map((chain, index) => {
-                const changeClass = chain.change >= 0 ? 'positive' : 'negative';
-                
-                return `
-                    <tr>
-                        <td class="rank">#${index + 1}</td>
-                        <td><strong>${chain.name}</strong></td>
-                        <td class="tvl">${formatNumber(chain.tvl)}</td>
-                        <td><span class="change ${changeClass}">${formatPercent(chain.change)}</span></td>
-                        <td>${chain.tokenSymbol || '-'}</td>
-                    </tr>
-                `;
-            }).join('');
+            const rows = sorted.map((c, i) => `
+                <tr>
+                    <td class="rank">#${i + 1}</td>
+                    <td><a href="https://defillama.com/chain/${escapeHtml(c.slug)}" target="_blank">${escapeHtml(c.name)}</a></td>
+                    <td class="tvl">${formatTVL(c.tvl)}</td>
+                    <td><span class="change ${getChangeClass(c.change)}">${formatPercent(c.change)}</span></td>
+                    <td>${escapeHtml(c.tokenSymbol)}</td>
+                </tr>
+            `).join('');
 
             return `
-                <table>
+                <table id="chainsTable">
                     <thead>
                         <tr>
                             <th>Rank</th>
-                            <th>Chain</th>
-                            <th>Current TVL</th>
-                            <th>TVL Change</th>
-                            <th>Native Token</th>
+                            <th class="sortable ${sortCol === 'name' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="name">Chain</th>
+                            <th class="sortable ${sortCol === 'tvl' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="tvl">TVL</th>
+                            <th class="sortable ${sortCol === 'change' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="change">Change</th>
+                            <th>Token</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        ${rows}
-                    </tbody>
+                    <tbody>${rows}</tbody>
                 </table>
             `;
         }
 
         function updateStats(protocols, chains) {
+            const sortedProtocols = sortData(protocols, 'change', 'desc');
+            const sortedChains = sortData(chains, 'change', 'desc');
+
             document.getElementById('totalProtocols').textContent = protocols.length;
             document.getElementById('totalChains').textContent = chains.length;
-            
-            if (protocols.length > 0) {
-                const avgGrowth = protocols.reduce((sum, p) => sum + p.change, 0) / protocols.length;
-                document.getElementById('avgGrowth').textContent = formatPercent(avgGrowth);
-                document.getElementById('topGrowth').textContent = formatPercent(protocols[0].change);
-            }
+            document.getElementById('topGrowth').textContent = sortedProtocols.length ? formatPercent(sortedProtocols[0].change) : '-';
+            document.getElementById('topChainGrowth').textContent = sortedChains.length ? formatPercent(sortedChains[0].change) : '-';
         }
 
-        function showLoading(container) {
-            container.innerHTML = `
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading data...</p>
-                </div>
-            `;
+        // ============ EVENT HANDLERS ============
+        document.getElementById('protocolsContainer').addEventListener('click', e => {
+            const th = e.target.closest('th.sortable');
+            if (!th) return;
+
+            const col = th.dataset.col;
+            const isSameColumn = sortState.protocols.column === col;
+            sortState.protocols.direction = isSameColumn && sortState.protocols.direction === 'desc' ? 'asc' : 'desc';
+            sortState.protocols.column = col;
+            renderAll();
+        });
+
+        document.getElementById('chainsContainer').addEventListener('click', e => {
+            const th = e.target.closest('th.sortable');
+            if (!th) return;
+
+            const col = th.dataset.col;
+            const isSameColumn = sortState.chains.column === col;
+            sortState.chains.direction = isSameColumn && sortState.chains.direction === 'desc' ? 'asc' : 'desc';
+            sortState.chains.column = col;
+            renderAll();
+        });
+
+        // ============ MAIN RENDER ============
+        function renderAll() {
+            if (!rawProtocols || !rawChains) return;
+
+            const processedProtocols = processProtocols(rawProtocols, currentTimeframe);
+            const processedChains = processChains(rawChains, currentTimeframe);
+
+            document.getElementById('protocolsContainer').innerHTML = renderProtocolsTable(
+                processedProtocols,
+                sortState.protocols.column,
+                sortState.protocols.direction
+            );
+
+            document.getElementById('chainsContainer').innerHTML = renderChainsTable(
+                processedChains,
+                sortState.chains.column,
+                sortState.chains.direction
+            );
+
+            updateStats(processedProtocols, processedChains);
         }
 
-        function showError(container, message) {
-            container.innerHTML = `<div class="error">${message}</div>`;
-        }
+        // ============ DATA LOADING ============
+        async function loadData(forceRefresh = false) {
+            if (isLoading) return;
 
-        // Main Functions
-        async function fetchAllData() {
-            if (state.isLoading) return;
-            
-            state.isLoading = true;
+            const pc = document.getElementById('protocolsContainer');
+            const cc = document.getElementById('chainsContainer');
             const refreshBtn = document.getElementById('refreshBtn');
-            refreshBtn.disabled = true;
-            refreshBtn.textContent = '⏳ Loading...';
-
-            const protocolsContainer = document.getElementById('protocolsContainer');
-            const chainsContainer = document.getElementById('chainsContainer');
-
-            showLoading(protocolsContainer);
-            showLoading(chainsContainer);
 
             try {
-                // Fetch base data
-                const [protocols, chains] = await Promise.all([
-                    API.fetchProtocols(),
-                    API.fetchChains()
-                ]);
+                isLoading = true;
+                refreshBtn.disabled = true;
+                refreshBtn.textContent = '↻ Loading...';
 
-                state.protocols = protocols;
-                state.chains = chains;
-                state.lastFetch = new Date();
+                if (!rawProtocols || !rawChains || forceRefresh) {
+                    pc.innerHTML = cc.innerHTML = `
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <p>Loading data from DefiLlama...</p>
+                        </div>
+                    `;
 
-                // Process and render
-                await updateDisplay();
+                    const [protocolsResponse, chainsResponse] = await Promise.all([
+                        fetch('https://api.llama.fi/protocols'),
+                        fetch('https://api.llama.fi/v2/chains')
+                    ]);
 
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                showError(protocolsContainer, `Error loading data: ${error.message}`);
-                showError(chainsContainer, `Error loading data: ${error.message}`);
+                    if (!protocolsResponse.ok || !chainsResponse.ok) {
+                        throw new Error('API request failed');
+                    }
+
+                    rawProtocols = await protocolsResponse.json();
+                    rawChains = await chainsResponse.json();
+                }
+
+                renderAll();
+                document.getElementById('lastUpdated').textContent = `Last updated: ${new Date().toLocaleString()}`;
+
+            } catch (err) {
+                console.error('Load error:', err);
+                const errorHtml = `
+                    <div class="error">
+                        <p>Failed to load data: ${escapeHtml(err.message)}</p>
+                        <button class="retry-btn" onclick="loadData(true)">↻ Retry</button>
+                    </div>
+                `;
+                pc.innerHTML = cc.innerHTML = errorHtml;
             } finally {
-                state.isLoading = false;
+                isLoading = false;
                 refreshBtn.disabled = false;
-                refreshBtn.textContent = '🔄 Refresh Data';
+                refreshBtn.textContent = '↻ Refresh';
             }
         }
 
-        async function updateDisplay() {
-            const protocolsContainer = document.getElementById('protocolsContainer');
-            const chainsContainer = document.getElementById('chainsContainer');
+        // ============ REFRESH BUTTON ============
+        document.getElementById('refreshBtn').addEventListener('click', () => {
+            loadData(true);
+        });
 
-            showLoading(protocolsContainer);
-            showLoading(chainsContainer);
-
-            try {
-                const [processedProtocols, processedChains] = await Promise.all([
-                    processProtocols(state.protocols, state.currentTimeframe),
-                    processChains(state.chains, state.currentTimeframe)
-                ]);
-
-                protocolsContainer.innerHTML = renderProtocolsTable(processedProtocols);
-                chainsContainer.innerHTML = renderChainsTable(processedChains);
-                
-                updateStats(processedProtocols, processedChains);
-                
-                document.getElementById('lastUpdated').textContent = 
-                    `Last updated: ${new Date().toLocaleString()}`;
-
-            } catch (error) {
-                console.error('Error processing data:', error);
-                showError(protocolsContainer, `Error processing data: ${error.message}`);
-                showError(chainsContainer, `Error processing data: ${error.message}`);
-            }
-        }
-
-        // Event Listeners
+        // ============ TIMEFRAME SWITCH ============
         document.querySelectorAll('.timeframe-btn').forEach(btn => {
-            btn.addEventListener('click', async () => {
-                // Update active button
+            btn.addEventListener('click', () => {
                 document.querySelectorAll('.timeframe-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                
-                // Update timeframe and refresh display
-                state.currentTimeframe = parseInt(btn.dataset.timeframe);
-                
-                if (state.protocols.length > 0) {
-                    await updateDisplay();
-                } else {
-                    await fetchAllData();
-                }
+                currentTimeframe = btn.dataset.timeframe;
+
+                // Reset sort state when changing timeframe
+                sortState.protocols = { column: 'change', direction: 'desc' };
+                sortState.chains = { column: 'change', direction: 'desc' };
+
+                renderAll();
             });
         });
 
-        document.getElementById('refreshBtn').addEventListener('click', fetchAllData);
-
-        // Initial load
-        fetchAllData();
+        // ============ INIT ============
+        loadData();
     </script>
 </body>
 </html>
