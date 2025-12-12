@@ -17,7 +17,17 @@
             min-height: 100vh;
             color: #e4e4e4;
             padding: 20px;
-            padding-top: 80px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(123, 44, 191, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         .container {
@@ -25,153 +35,219 @@
             margin: 0 auto;
         }
 
-        /* Navigation Bar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(15, 52, 96, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1000;
-            padding: 0 20px;
-        }
-
-        .navbar-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 60px;
-        }
-
-        .navbar-brand {
-            font-size: 1.2rem;
-            font-weight: bold;
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .navbar-links {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .nav-link {
-            padding: 8px 16px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #e4e4e4;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: #00d4ff;
-        }
-
-        .nav-link .nav-icon {
-            margin-right: 6px;
-        }
-
         header {
             text-align: center;
-            padding: 40px 0;
+            padding: 32px 0 16px;
         }
 
         header h1 {
-            font-size: 2.5rem;
+            font-size: 2.7rem;
+            font-weight: 800;
             background: linear-gradient(90deg, #00d4ff, #7b2cbf);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         header p {
             color: #888;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
+            margin-bottom: 12px;
         }
 
-        .controls {
+        .header-controls {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .timeframe-btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-
-        .timeframe-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .timeframe-btn.active {
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
-            font-weight: bold;
+            margin-top: 12px;
         }
 
         .refresh-btn {
-            padding: 12px 24px;
+            padding: 14px 32px;
             border: none;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
             color: #fff;
             cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(123, 44, 191, 0.5);
             transition: all 0.3s ease;
-            font-size: 1rem;
         }
 
         .refresh-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(123, 44, 191, 0.7);
         }
 
         .refresh-btn:disabled {
-            opacity: 0.5;
+            opacity: 0.6;
             cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Stats */
+        .stats-grid {
+            margin: 32px 0 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(14px);
+            border-radius: 12px;
+            padding: 22px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3), 0 0 25px rgba(0, 212, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), 0 0 35px rgba(0, 212, 255, 0.2);
+        }
+
+        .stat-card .value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-card .label {
+            color: #999;
+            margin-top: 8px;
+            font-size: 0.92rem;
+        }
+
+        .stat-card .top-name {
+            color: #00d4ff;
+            font-weight: 700;
+            margin-top: 6px;
+            font-size: 1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Layout */
+        .top-sections-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 26px;
+            margin-bottom: 26px;
         }
 
         .section {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
+            height: calc(100vh - 360px);
+            min-height: 520px;
+            overflow-y: auto;
+            overflow-x: hidden;
             padding: 24px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
+            padding-right: 16px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(14px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            scroll-margin-top: 80px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), 0 0 30px rgba(0, 212, 255, 0.12);
+            transition: all 0.3s ease;
         }
 
-        .section h2 {
+        .section:hover {
+            box-shadow: 0 14px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 212, 255, 0.22);
+            border-color: rgba(0, 212, 255, 0.4);
+        }
+
+        #categories-section {
+            height: calc(100vh - 360px);
+            min-height: 520px;
+        }
+
+        /* Scrollbars */
+        .section::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .section::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+        }
+
+        .section::-webkit-scrollbar-thumb {
+            background: rgba(0, 212, 255, 0.6);
+            border-radius: 6px;
+        }
+
+        .section::-webkit-scrollbar-thumb:hover {
+            background: #00d4ff;
+        }
+
+        /* Headers & Controls */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
             margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.25);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .section-header h2 {
             font-size: 1.5rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .section-icon {
             font-size: 1.5rem;
         }
 
+        .section-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .timeframe-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.3s ease;
+        }
+
+        .timeframe-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-1px);
+        }
+
+        .timeframe-btn.active {
+            background: linear-gradient(135deg, #00d4ff28, #7b2cbf40);
+            border: 1px solid rgba(0, 212, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Loading */
         .loading {
             text-align: center;
             padding: 60px;
@@ -192,6 +268,7 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Tables */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -204,12 +281,13 @@
         }
 
         th {
-            background: rgba(0, 0, 0, 0.3);
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
+            background: rgba(0, 0, 0, 0.45);
             color: #00d4ff;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.8px;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.4);
             user-select: none;
             position: relative;
         }
@@ -220,7 +298,7 @@
         }
 
         th.sortable:hover {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
         }
 
         th.sortable::after {
@@ -248,31 +326,7 @@
         .rank {
             font-weight: bold;
             color: #7b2cbf;
-            width: 50px;
-        }
-
-        .protocol-name {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .protocol-name a {
-            color: #e4e4e4;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .protocol-name a:hover {
-            color: #00d4ff;
-        }
-
-        .protocol-logo {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            object-fit: contain;
+            width: 60px;
         }
 
         .tvl {
@@ -301,147 +355,6 @@
             color: #888;
         }
 
-        .chains-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            max-width: 220px;
-        }
-
-        .chain-tag {
-            background: rgba(123, 44, 191, 0.3);
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            white-space: nowrap;
-        }
-
-        .category-name {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .category-icon {
-            font-size: 1.2rem;
-        }
-
-        .category-link {
-            color: #e4e4e4;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .category-link:hover {
-            color: #00d4ff;
-        }
-
-        .protocol-count {
-            background: rgba(0, 212, 255, 0.2);
-            color: #00d4ff;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .error {
-            text-align: center;
-            padding: 40px;
-            color: #ff4444;
-            background: rgba(255, 68, 68, 0.1);
-            border-radius: 8px;
-        }
-
-        .retry-btn {
-            margin-top: 15px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .retry-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .stat-card .value {
-            font-size: 1.6rem;
-            font-weight: bold;
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-card .label {
-            color: #888;
-            margin-top: 8px;
-            font-size: 0.85rem;
-        }
-
-        .table-container {
-            overflow-x: auto;
-        }
-
-        .last-updated {
-            text-align: center;
-            color: #666;
-            font-size: 0.9rem;
-            margin-top: 20px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-        }
-
-        footer a {
-            color: #00d4ff;
-            text-decoration: none;
-        }
-
-        .tvl-bar-container {
-            width: 100px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .tvl-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        .tvl-cell {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
         /* Expandable rows */
         .expandable-row {
             cursor: pointer;
@@ -452,19 +365,25 @@
             background: rgba(255, 255, 255, 0.08);
         }
 
+        .expandable-row:focus {
+            outline: 2px solid #00d4ff;
+            outline-offset: -2px;
+        }
+
         .expandable-row td:first-child {
             position: relative;
-            padding-left: 30px;
+            padding-left: 28px;
         }
 
         .expand-icon {
             position: absolute;
-            left: 10px;
+            left: 8px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #00d4ff;
             transition: transform 0.2s ease;
+            font-weight: bold;
         }
 
         .expandable-row.expanded .expand-icon {
@@ -513,15 +432,10 @@
             border-bottom: none;
         }
 
-        .sub-table .protocol-logo {
-            width: 22px;
-            height: 22px;
-        }
-
         .sub-table-title {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #888;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -534,33 +448,175 @@
         .no-data {
             color: #666;
             font-style: italic;
-            padding: 20px;
+            padding: 30px;
             text-align: center;
         }
 
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #ff4444;
+            background: rgba(255, 68, 68, 0.1);
+            border-radius: 8px;
+        }
+
+        .retry-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #666;
+            margin: 24px 0;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        /* Protocol/Chain specific styles */
+        .protocol-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .protocol-name a,
+        .chain-name a,
+        .category-name a {
+            color: #e4e4e4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .protocol-name a:hover,
+        .chain-name a:hover,
+        .category-name a:hover {
+            color: #00d4ff;
+        }
+
+        .protocol-logo {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            object-fit: contain;
+        }
+
+        .chains-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            max-width: 200px;
+        }
+
+        .chain-tag {
+            background: rgba(123, 44, 191, 0.3);
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+
+        .category-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-icon {
+            font-size: 1.4rem;
+        }
+
+        .protocol-count {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .tvl-bar-container {
+            width: 100px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .tvl-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+
+        @media (max-width: 1100px) {
+            .top-sections-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .section,
+            #categories-section {
+                height: calc(100vh - 420px);
+                min-height: 460px;
+            }
+        }
+
+        @media (max-height: 900px) {
+            .section,
+            #categories-section {
+                height: calc(100vh - 340px);
+            }
+        }
+
         @media (max-width: 768px) {
-            body {
-                padding-top: 120px;
-            }
-
-            .navbar-content {
-                flex-direction: column;
-                height: auto;
-                padding: 10px 0;
-                gap: 10px;
-            }
-
-            .navbar-links {
-                gap: 5px;
-            }
-
-            .nav-link {
-                padding: 6px 10px;
-                font-size: 0.8rem;
-            }
-
             header h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+
+            .top-sections-wrapper {
+                gap: 20px;
+            }
+
+            .section {
+                padding: 18px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .section-header h2 {
+                font-size: 1.2rem;
             }
 
             th, td {
@@ -588,106 +644,128 @@
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="navbar-content">
-            <div class="navbar-brand">DeFi TVL Tracker</div>
-            <div class="navbar-links">
-                <a href="#protocols-section" class="nav-link"><span class="nav-icon">🚀</span>Protocols</a>
-                <a href="#categories-section" class="nav-link"><span class="nav-icon">📊</span>Categories</a>
-                <a href="#chains-section" class="nav-link"><span class="nav-icon">⛓️</span>Chains</a>
-            </div>
-        </div>
-    </nav>
-
     <div class="container">
         <header>
             <h1>DeFi TVL Growth Tracker</h1>
-            <p>Track protocols, chains, and categories with the highest TVL growth</p>
+            <p>Real-time leaders in protocols, chains & categories</p>
+            <div class="header-controls">
+                <button class="refresh-btn" id="refreshBtn">↻ Refresh Data</button>
+            </div>
         </header>
 
-        <div class="controls">
-            <button class="timeframe-btn active" data-timeframe="1d">24 Hours</button>
-            <button class="timeframe-btn" data-timeframe="7d">7 Days</button>
-            <button class="timeframe-btn" data-timeframe="30d">1 Month</button>
-            <button class="refresh-btn" id="refreshBtn">↻ Refresh</button>
-        </div>
-
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="value" id="totalProtocols">-</div>
-                <div class="label">Protocols (≥$1M)</div>
+        <div class="stats-grid">
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="value" id="totalProtocols">-</div>
+                    <div class="label">Protocols Tracked (≥$1M TVL)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="totalChains">-</div>
+                    <div class="label">Chains Tracked (≥$10M TVL)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="totalCategories">-</div>
+                    <div class="label">Categories Tracked</div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="value" id="totalChains">-</div>
-                <div class="label">Chains (≥$10M)</div>
-            </div>
-            <div class="stat-card">
-                <div class="value" id="totalCategories">-</div>
-                <div class="label">Categories</div>
-            </div>
-            <div class="stat-card">
-                <div class="value" id="topGrowth">-</div>
-                <div class="label">Top Protocol Growth</div>
-            </div>
-            <div class="stat-card">
-                <div class="value" id="topChainGrowth">-</div>
-                <div class="label">Top Chain Growth</div>
-            </div>
-            <div class="stat-card">
-                <div class="value" id="topCategoryGrowth">-</div>
-                <div class="label">Top Category Growth</div>
-            </div>
-        </div>
-
-        <div class="section" id="protocols-section">
-            <h2><span class="section-icon">🚀</span> Top Growing Protocols (TVL ≥ $1M)</h2>
-            <div class="table-container" id="protocolsContainer">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading protocols...</p>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="value" id="topGrowth">-</div>
+                    <div class="label">Top Protocol Growth (24H)</div>
+                    <div class="top-name" id="topProtocolName">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="topChainGrowth">-</div>
+                    <div class="label">Top Chain Growth (24H)</div>
+                    <div class="top-name" id="topChainName">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value" id="topCategoryGrowth">-</div>
+                    <div class="label">Top Category Growth (24H)</div>
+                    <div class="top-name" id="topCategoryName">-</div>
                 </div>
             </div>
         </div>
 
-        <div class="section" id="categories-section">
-            <h2><span class="section-icon">📊</span> Category Performance (Click to expand)</h2>
-            <div class="table-container" id="categoriesContainer">
+        <div class="top-sections-wrapper">
+            <section class="section" id="protocols-section" aria-labelledby="protocols-heading">
+                <div class="section-header">
+                    <h2 id="protocols-heading"><span class="section-icon">🚀</span> Top Growing Protocols</h2>
+                    <div class="section-controls" role="group" aria-label="Protocols timeframe selection">
+                        <button class="timeframe-btn active" data-section="protocols" data-timeframe="1d" aria-pressed="true">24H</button>
+                        <button class="timeframe-btn" data-section="protocols" data-timeframe="7d" aria-pressed="false">7D</button>
+                        <button class="timeframe-btn" data-section="protocols" data-timeframe="30d" aria-pressed="false">1M</button>
+                    </div>
+                </div>
+                <div class="table-container" id="protocolsContainer" role="region" aria-live="polite">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Loading protocols...</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="chains-section" aria-labelledby="chains-heading">
+                <div class="section-header">
+                    <h2 id="chains-heading"><span class="section-icon">⛓️</span> Top Growing Chains</h2>
+                    <div class="section-controls" role="group" aria-label="Chains timeframe selection">
+                        <button class="timeframe-btn active" data-section="chains" data-timeframe="1d" aria-pressed="true">24H</button>
+                        <button class="timeframe-btn" data-section="chains" data-timeframe="7d" aria-pressed="false">7D</button>
+                        <button class="timeframe-btn" data-section="chains" data-timeframe="30d" aria-pressed="false">1M</button>
+                    </div>
+                </div>
+                <div class="table-container" id="chainsContainer" role="region" aria-live="polite">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Loading chains...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="section" id="categories-section" aria-labelledby="categories-heading">
+            <div class="section-header">
+                <h2 id="categories-heading"><span class="section-icon">📊</span> Category Performance</h2>
+                <div class="section-controls" role="group" aria-label="Categories timeframe selection">
+                    <button class="timeframe-btn active" data-section="categories" data-timeframe="1d" aria-pressed="true">24H</button>
+                    <button class="timeframe-btn" data-section="categories" data-timeframe="7d" aria-pressed="false">7D</button>
+                    <button class="timeframe-btn" data-section="categories" data-timeframe="30d" aria-pressed="false">1M</button>
+                </div>
+            </div>
+            <div class="table-container" id="categoriesContainer" role="region" aria-live="polite">
                 <div class="loading">
                     <div class="spinner"></div>
                     <p>Loading categories...</p>
                 </div>
             </div>
-        </div>
-
-        <div class="section" id="chains-section">
-            <h2><span class="section-icon">⛓️</span> Top Growing Chains (Click to expand)</h2>
-            <div class="table-container" id="chainsContainer">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading chains...</p>
-                </div>
-            </div>
-        </div>
+        </section>
 
         <p class="last-updated" id="lastUpdated"></p>
 
         <footer>
-            <p>Data from <a href="https://defillama.com" target="_blank">DefiLlama API</a> • Built with ❤️ for DeFi degens</p>
+            <p>Data from <a href="https://defillama.com" target="_blank" rel="noopener noreferrer">DefiLlama API</a> • Built with ❤️ for DeFi degens</p>
         </footer>
     </div>
 
     <script>
+        'use strict';
+
         // ============ CONFIGURATION ============
-        const CONFIG = {
+        const CONFIG = Object.freeze({
             PROTOCOL_MIN_TVL: 1_000_000,
             CHAIN_MIN_TVL: 10_000_000,
             TOP_RESULTS: 50,
-            TOP_SUB_RESULTS: 5
-        };
+            TOP_SUB_RESULTS: 5,
+            API_URL: 'https://api.llama.fi/protocols',
+            TIMEFRAMES: Object.freeze({
+                DAY: '1d',
+                WEEK: '7d',
+                MONTH: '30d'
+            })
+        });
 
-        // Category icons mapping
-        const CATEGORY_ICONS = {
+        // Category icons mapping (emojis)
+        const CATEGORY_ICONS = Object.freeze({
             'Dexes': '🔄',
             'DEX': '🔄',
             'Lending': '🏦',
@@ -721,10 +799,10 @@
             'SoFi': '📱',
             'Oracle': '🔮',
             'Other': '📦'
-        };
+        });
 
         // Chain name → DefiLlama slug mapping
-        const CHAIN_SLUGS = {
+        const CHAIN_SLUGS = Object.freeze({
             'Ethereum': 'ethereum',
             'Tron': 'tron',
             'BSC': 'bsc',
@@ -760,31 +838,42 @@
             'Near': 'near',
             'Cosmos': 'cosmos',
             'Osmosis': 'osmosis'
-        };
+        });
 
         // ============ STATE ============
-        let currentTimeframe = '1d';
-        let rawProtocols = null;
-        let rawChains = null;
-        let isLoading = false;
-        let expandedChains = new Set();
-        let expandedCategories = new Set();
-
-        const sortState = {
-            protocols: { column: 'change', direction: 'desc' },
-            chains: { column: 'change', direction: 'desc' },
-            categories: { column: 'change', direction: 'desc' }
+        const state = {
+            rawProtocols: null,
+            isLoading: false,
+            expandedChains: new Set(),
+            expandedCategories: new Set(),
+            sectionTimeframes: {
+                protocols: CONFIG.TIMEFRAMES.DAY,
+                categories: CONFIG.TIMEFRAMES.DAY,
+                chains: CONFIG.TIMEFRAMES.DAY
+            },
+            sortState: {
+                protocols: { column: 'change', direction: 'desc' },
+                chains: { column: 'change', direction: 'desc' },
+                categories: { column: 'change', direction: 'desc' }
+            },
+            cache: {
+                protocols: new Map(),
+                chains: new Map(),
+                categories: new Map()
+            }
         };
 
         // ============ UTILITIES ============
-        function escapeHtml(text) {
+        const escapeHtml = (() => {
             const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
+            return (text) => {
+                div.textContent = text;
+                return div.innerHTML;
+            };
+        })();
 
         function formatTVL(num) {
-            if (!num || isNaN(num)) return '$0';
+            if (!num || !Number.isFinite(num)) return '$0';
             if (num >= 1e9) return `$${(num / 1e9).toFixed(2)}B`;
             if (num >= 1e6) return `$${(num / 1e6).toFixed(2)}M`;
             if (num >= 1e3) return `$${(num / 1e3).toFixed(2)}K`;
@@ -792,18 +881,32 @@
         }
 
         function formatPercent(num) {
-            if (num === null || num === undefined || isNaN(num)) return 'N/A';
+            if (num === null || num === undefined || !Number.isFinite(num)) return 'N/A';
             const sign = num >= 0 ? '+' : '';
             return `${sign}${num.toFixed(2)}%`;
         }
 
         function getChangeClass(num) {
-            if (num === null || num === undefined || isNaN(num)) return 'neutral';
+            if (num === null || num === undefined || !Number.isFinite(num)) return 'neutral';
             return num >= 0 ? 'positive' : 'negative';
         }
 
         function getChangeField(timeframe) {
-            return timeframe === '1d' ? 'change_1d' : timeframe === '7d' ? 'change_7d' : 'change_1m';
+            const fieldMap = {
+                [CONFIG.TIMEFRAMES.DAY]: 'change_1d',
+                [CONFIG.TIMEFRAMES.WEEK]: 'change_7d',
+                [CONFIG.TIMEFRAMES.MONTH]: 'change_1m'
+            };
+            return fieldMap[timeframe] || 'change_1d';
+        }
+
+        function getTimeframeLabel(timeframe) {
+            const labelMap = {
+                [CONFIG.TIMEFRAMES.DAY]: '24H',
+                [CONFIG.TIMEFRAMES.WEEK]: '7D',
+                [CONFIG.TIMEFRAMES.MONTH]: '1M'
+            };
+            return labelMap[timeframe] || '24H';
         }
 
         function getCategoryIcon(category) {
@@ -814,11 +917,26 @@
             return category.toLowerCase().replace(/\s+/g, '-').replace(/[^^a-z0-9-]/g, '');
         }
 
+        function getChainSlug(chainName) {
+            return CHAIN_SLUGS[chainName] || chainName.toLowerCase().replace(/\s+/g, '-');
+        }
+
+        function clearCache() {
+            state.cache.protocols.clear();
+            state.cache.chains.clear();
+            state.cache.categories.clear();
+        }
+
         // ============ DATA PROCESSING ============
         function processProtocols(protocols, timeframe) {
+            const cacheKey = timeframe;
+            if (state.cache.protocols.has(cacheKey)) {
+                return state.cache.protocols.get(cacheKey);
+            }
+
             const field = getChangeField(timeframe);
-            return protocols
-                .filter(p => p.tvl >= CONFIG.PROTOCOL_MIN_TVL && p[field] != null)
+            const result = protocols
+                .filter(p => p.tvl >= CONFIG.PROTOCOL_MIN_TVL && p[field] != null && Number.isFinite(p[field]))
                 .map(p => ({
                     name: p.name,
                     slug: p.slug,
@@ -828,27 +946,80 @@
                     change: p[field],
                     category: p.category || 'Other'
                 }));
+
+            state.cache.protocols.set(cacheKey, result);
+            return result;
         }
 
-        function processChains(chains, timeframe) {
+        function processChains(protocols, timeframe) {
+            const cacheKey = timeframe;
+            if (state.cache.chains.has(cacheKey)) {
+                return state.cache.chains.get(cacheKey);
+            }
+
             const field = getChangeField(timeframe);
-            return chains
-                .filter(c => c.tvl >= CONFIG.CHAIN_MIN_TVL && c[field] != null)
+            const chainMap = new Map();
+
+            protocols.forEach(p => {
+                const chains = p.chains || [];
+                const change = p[field];
+                
+                if (change == null || !Number.isFinite(change) || chains.length === 0) return;
+
+                chains.forEach(chainName => {
+                    // Use chainTvls if available for accurate per-chain TVL
+                    let chainTvl;
+                    if (p.chainTvls && p.chainTvls[chainName] != null && typeof p.chainTvls[chainName] === 'number') {
+                        chainTvl = p.chainTvls[chainName];
+                    } else if (chains.length === 1) {
+                        // Single chain protocol - use full TVL
+                        chainTvl = p.tvl;
+                    } else {
+                        // Multi-chain without specific data - distribute evenly as fallback
+                        chainTvl = p.tvl / chains.length;
+                    }
+                    
+                    if (!chainMap.has(chainName)) {
+                        chainMap.set(chainName, {
+                            name: chainName,
+                            totalTvl: 0,
+                            weightedChangeSum: 0,
+                            protocolCount: 0
+                        });
+                    }
+
+                    const chain = chainMap.get(chainName);
+                    chain.totalTvl += chainTvl;
+                    chain.weightedChangeSum += chainTvl * change;
+                    chain.protocolCount += 1;
+                });
+            });
+
+            const result = Array.from(chainMap.values())
+                .filter(c => c.totalTvl >= CONFIG.CHAIN_MIN_TVL)
                 .map(c => ({
                     name: c.name,
-                    slug: CHAIN_SLUGS[c.name] || c.name.toLowerCase().replace(/\s+/g, '-'),
-                    tvl: c.tvl,
-                    change: c[field],
-                    tokenSymbol: c.tokenSymbol || '-'
+                    slug: getChainSlug(c.name),
+                    tvl: c.totalTvl,
+                    change: c.totalTvl > 0 ? c.weightedChangeSum / c.totalTvl : 0,
+                    protocolCount: c.protocolCount
                 }));
+
+            state.cache.chains.set(cacheKey, result);
+            return result;
         }
 
         function processCategories(protocols, timeframe) {
+            const cacheKey = timeframe;
+            if (state.cache.categories.has(cacheKey)) {
+                return state.cache.categories.get(cacheKey);
+            }
+
             const field = getChangeField(timeframe);
             const categoryMap = new Map();
 
             protocols
-                .filter(p => p.tvl >= CONFIG.PROTOCOL_MIN_TVL && p[field] != null)
+                .filter(p => p.tvl >= CONFIG.PROTOCOL_MIN_TVL && p[field] != null && Number.isFinite(p[field]))
                 .forEach(p => {
                     const category = p.category || 'Other';
                     
@@ -857,8 +1028,7 @@
                             name: category,
                             totalTvl: 0,
                             weightedChangeSum: 0,
-                            protocolCount: 0,
-                            protocols: []
+                            protocolCount: 0
                         });
                     }
 
@@ -866,28 +1036,29 @@
                     cat.totalTvl += p.tvl;
                     cat.weightedChangeSum += p.tvl * p[field];
                     cat.protocolCount += 1;
-                    cat.protocols.push(p.name);
                 });
 
-            return Array.from(categoryMap.values())
+            const result = Array.from(categoryMap.values())
+                .filter(cat => cat.totalTvl > 0)
                 .map(cat => ({
                     name: cat.name,
                     tvl: cat.totalTvl,
                     change: cat.totalTvl > 0 ? cat.weightedChangeSum / cat.totalTvl : 0,
-                    protocolCount: cat.protocolCount,
-                    topProtocols: cat.protocols.slice(0, 5)
-                }))
-                .filter(cat => cat.tvl > 0);
+                    protocolCount: cat.protocolCount
+                }));
+
+            state.cache.categories.set(cacheKey, result);
+            return result;
         }
 
-        function getTopProtocolsForChain(chainName, limit = CONFIG.TOP_SUB_RESULTS) {
-            if (!rawProtocols) return [];
-            const field = getChangeField(currentTimeframe);
+        function getTopProtocolsForChain(chainName, timeframe, limit = CONFIG.TOP_SUB_RESULTS) {
+            if (!state.rawProtocols) return [];
+            const field = getChangeField(timeframe);
             
-            return rawProtocols
+            return state.rawProtocols
                 .filter(p => {
                     const chains = p.chains || [];
-                    return chains.includes(chainName) && p.tvl >= CONFIG.PROTOCOL_MIN_TVL && p[field] != null;
+                    return chains.includes(chainName) && p.tvl >= CONFIG.PROTOCOL_MIN_TVL && p[field] != null && Number.isFinite(p[field]);
                 })
                 .map(p => ({
                     name: p.name,
@@ -901,14 +1072,14 @@
                 .slice(0, limit);
         }
 
-        function getTopProtocolsForCategory(categoryName, limit = CONFIG.TOP_SUB_RESULTS) {
-            if (!rawProtocols) return [];
-            const field = getChangeField(currentTimeframe);
+        function getTopProtocolsForCategory(categoryName, timeframe, limit = CONFIG.TOP_SUB_RESULTS) {
+            if (!state.rawProtocols) return [];
+            const field = getChangeField(timeframe);
             
-            return rawProtocols
+            return state.rawProtocols
                 .filter(p => {
                     const category = p.category || 'Other';
-                    return category === categoryName && p.tvl >= CONFIG.PROTOCOL_MIN_TVL && p[field] != null;
+                    return category === categoryName && p.tvl >= CONFIG.PROTOCOL_MIN_TVL && p[field] != null && Number.isFinite(p[field]);
                 })
                 .map(p => ({
                     name: p.name,
@@ -942,39 +1113,44 @@
             });
         }
 
+        function getSortClass(currentCol, sortCol, sortDir) {
+            if (currentCol !== sortCol) return '';
+            return sortDir === 'asc' ? 'sort-asc' : 'sort-desc';
+        }
+
         // ============ SUB-TABLE RENDERING ============
-        function renderSubTable(protocols, title) {
+        function renderSubTable(protocols, title, timeframe) {
             if (protocols.length === 0) {
                 return `<div class="no-data">No protocols found with significant TVL change</div>`;
             }
 
+            const timeframeLabel = getTimeframeLabel(timeframe);
+
             const rows = protocols.map((p, i) => `
                 <tr>
-                    <td class="rank">#${i + 1}</td>
+                    <td>#${i + 1}</td>
                     <td>
                         <div class="protocol-name">
-                            <img class="protocol-logo" src="${escapeHtml(p.logo)}" alt="${escapeHtml(p.name)}" onerror="this.onerror=null; this.src='https://icons.llama.fi/missing.png'">
-                            <a href="https://defillama.com/protocol/${escapeHtml(p.slug)}" target="_blank">${escapeHtml(p.name)}</a>
+                            <img class="protocol-logo" src="${escapeHtml(p.logo)}" alt="" loading="lazy" onerror="this.onerror=null; this.src='https://icons.llama.fi/missing.png'" style="width:22px;height:22px;">
+                            <a href="https://defillama.com/protocol/${escapeHtml(p.slug)}" target="_blank" rel="noopener noreferrer">${escapeHtml(p.name)}</a>
                         </div>
                     </td>
                     <td class="tvl">${formatTVL(p.tvl)}</td>
                     <td><span class="change ${getChangeClass(p.change)}">${formatPercent(p.change)}</span></td>
-                    <td>${escapeHtml(p.category)}</td>
                 </tr>
             `).join('');
 
             return `
                 <div class="sub-table-title">
-                    <span>📈</span> Top 5 TVL Gainers in <strong>${escapeHtml(title)}</strong>
+                    <span>📈</span> Top 5 TVL Gainers in <strong>${escapeHtml(title)}</strong> (${timeframeLabel})
                 </div>
                 <table class="sub-table">
                     <thead>
                         <tr>
-                            <th>Rank</th>
+                            <th>#</th>
                             <th>Protocol</th>
                             <th>TVL</th>
                             <th>Change</th>
-                            <th>Category</th>
                         </tr>
                     </thead>
                     <tbody>${rows}</tbody>
@@ -982,76 +1158,12 @@
             `;
         }
 
-        // ============ RENDERING ============
-        function renderCategoriesTable(data, sortCol, sortDir) {
-            const sorted = sortData(data, sortCol, sortDir);
-            const maxTvl = Math.max(...sorted.map(c => c.tvl));
-
-            if (sorted.length === 0) {
-                return '<div class="loading"><p>No categories found.</p></div>';
-            }
-
-            const rows = sorted.map((c, i) => {
-                const barWidth = maxTvl > 0 ? (c.tvl / maxTvl) * 100 : 0;
-                const isExpanded = expandedCategories.has(c.name);
-                const topProtocols = isExpanded ? getTopProtocolsForCategory(c.name) : [];
-                
-                return `
-                    <tr class="expandable-row ${isExpanded ? 'expanded' : ''}" data-category="${escapeHtml(c.name)}">
-                        <td class="rank">
-                            <span class="expand-icon">▶</span>
-                            #${i + 1}
-                        </td>
-                        <td>
-                            <div class="category-name">
-                                <span class="category-icon">${getCategoryIcon(c.name)}</span>
-                                <a class="category-link" href="https://defillama.com/protocols/${getCategorySlug(c.name)}" target="_blank" onclick="event.stopPropagation()">
-                                    ${escapeHtml(c.name)}
-                                </a>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="tvl-cell">
-                                <span class="tvl">${formatTVL(c.tvl)}</span>
-                                <div class="tvl-bar-container">
-                                    <div class="tvl-bar" style="width: ${barWidth}%"></div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="change ${getChangeClass(c.change)}">${formatPercent(c.change)}</span></td>
-                        <td><span class="protocol-count">${c.protocolCount}</span></td>
-                    </tr>
-                    <tr class="expanded-content ${isExpanded ? 'show' : ''}" data-category-content="${escapeHtml(c.name)}">
-                        <td colspan="5">
-                            <div class="sub-table-container">
-                                ${isExpanded ? renderSubTable(topProtocols, c.name) : ''}
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-
-            return `
-                <table id="categoriesTable">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th class="sortable ${sortCol === 'name' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="name">Category</th>
-                            <th class="sortable ${sortCol === 'tvl' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="tvl">Total TVL</th>
-                            <th class="sortable ${sortCol === 'change' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="change">Avg Change</th>
-                            <th class="sortable ${sortCol === 'protocolCount' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="protocolCount">Protocols</th>
-                        </tr>
-                    </thead>
-                    <tbody>${rows}</tbody>
-                </table>
-            `;
-        }
-
+        // ============ MAIN TABLE RENDERING ============
         function renderProtocolsTable(data, sortCol, sortDir) {
             const sorted = sortData(data, sortCol, sortDir).slice(0, CONFIG.TOP_RESULTS);
 
             if (sorted.length === 0) {
-                return '<div class="loading"><p>No protocols found matching criteria.</p></div>';
+                return '<div class="no-data">No protocols found matching criteria.</div>';
             }
 
             const rows = sorted.map((p, i) => `
@@ -1059,8 +1171,8 @@
                     <td class="rank">#${i + 1}</td>
                     <td>
                         <div class="protocol-name">
-                            <img class="protocol-logo" src="${escapeHtml(p.logo)}" alt="${escapeHtml(p.name)}" onerror="this.onerror=null; this.src='https://icons.llama.fi/missing.png'">
-                            <a href="https://defillama.com/protocol/${escapeHtml(p.slug)}" target="_blank">${escapeHtml(p.name)}</a>
+                            <img class="protocol-logo" src="${escapeHtml(p.logo)}" alt="" loading="lazy" onerror="this.onerror=null; this.src='https://icons.llama.fi/missing.png'">
+                            <a href="https://defillama.com/protocol/${escapeHtml(p.slug)}" target="_blank" rel="noopener noreferrer">${escapeHtml(p.name)}</a>
                         </div>
                     </td>
                     <td class="tvl">${formatTVL(p.tvl)}</td>
@@ -1076,15 +1188,15 @@
             `).join('');
 
             return `
-                <table id="protocolsTable">
+                <table id="protocolsTable" role="grid">
                     <thead>
                         <tr>
                             <th>Rank</th>
-                            <th class="sortable ${sortCol === 'name' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="name">Protocol</th>
-                            <th class="sortable ${sortCol === 'tvl' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="tvl">TVL</th>
-                            <th class="sortable ${sortCol === 'change' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="change">Change</th>
+                            <th class="sortable ${getSortClass('name', sortCol, sortDir)}" data-col="name">Protocol</th>
+                            <th class="sortable ${getSortClass('tvl', sortCol, sortDir)}" data-col="tvl">TVL</th>
+                            <th class="sortable ${getSortClass('change', sortCol, sortDir)}" data-col="change">Change</th>
                             <th>Chains</th>
-                            <th class="sortable ${sortCol === 'category' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="category">Category</th>
+                            <th class="sortable ${getSortClass('category', sortCol, sortDir)}" data-col="category">Category</th>
                         </tr>
                     </thead>
                     <tbody>${rows}</tbody>
@@ -1092,32 +1204,40 @@
             `;
         }
 
-        function renderChainsTable(data, sortCol, sortDir) {
+        function renderChainsTable(data, sortCol, sortDir, timeframe) {
             const sorted = sortData(data, sortCol, sortDir).slice(0, CONFIG.TOP_RESULTS);
 
             if (sorted.length === 0) {
-                return '<div class="loading"><p>No chains found matching criteria.</p></div>';
+                return '<div class="no-data">No chains found matching criteria.</div>';
             }
 
             const rows = sorted.map((c, i) => {
-                const isExpanded = expandedChains.has(c.name);
-                const topProtocols = isExpanded ? getTopProtocolsForChain(c.name) : [];
+                const isExpanded = state.expandedChains.has(c.name);
+                const topProtocols = isExpanded ? getTopProtocolsForChain(c.name, timeframe) : [];
                 
                 return `
-                    <tr class="expandable-row ${isExpanded ? 'expanded' : ''}" data-chain="${escapeHtml(c.name)}">
+                    <tr class="expandable-row ${isExpanded ? 'expanded' : ''}" 
+                        data-chain="${escapeHtml(c.name)}" 
+                        tabindex="0" 
+                        role="button" 
+                        aria-expanded="${isExpanded}">
                         <td class="rank">
-                            <span class="expand-icon">▶</span>
+                            <span class="expand-icon" aria-hidden="true">▶</span>
                             #${i + 1}
                         </td>
-                        <td><a href="https://defillama.com/chain/${escapeHtml(c.slug)}" target="_blank" onclick="event.stopPropagation()">${escapeHtml(c.name)}</a></td>
+                        <td>
+                            <div class="chain-name">
+                                <a href="https://defillama.com/chain/${escapeHtml(c.slug)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${escapeHtml(c.name)}</a>
+                            </div>
+                        </td>
                         <td class="tvl">${formatTVL(c.tvl)}</td>
                         <td><span class="change ${getChangeClass(c.change)}">${formatPercent(c.change)}</span></td>
-                        <td>${escapeHtml(c.tokenSymbol)}</td>
+                        <td><span class="protocol-count">${c.protocolCount}</span></td>
                     </tr>
                     <tr class="expanded-content ${isExpanded ? 'show' : ''}" data-chain-content="${escapeHtml(c.name)}">
                         <td colspan="5">
                             <div class="sub-table-container">
-                                ${isExpanded ? renderSubTable(topProtocols, c.name) : ''}
+                                ${isExpanded ? renderSubTable(topProtocols, c.name, timeframe) : ''}
                             </div>
                         </td>
                     </tr>
@@ -1125,14 +1245,14 @@
             }).join('');
 
             return `
-                <table id="chainsTable">
+                <table id="chainsTable" role="grid">
                     <thead>
                         <tr>
                             <th>Rank</th>
-                            <th class="sortable ${sortCol === 'name' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="name">Chain</th>
-                            <th class="sortable ${sortCol === 'tvl' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="tvl">TVL</th>
-                            <th class="sortable ${sortCol === 'change' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="change">Change</th>
-                            <th>Token</th>
+                            <th class="sortable ${getSortClass('name', sortCol, sortDir)}" data-col="name">Chain</th>
+                            <th class="sortable ${getSortClass('tvl', sortCol, sortDir)}" data-col="tvl">TVL</th>
+                            <th class="sortable ${getSortClass('change', sortCol, sortDir)}" data-col="change">Change</th>
+                            <th class="sortable ${getSortClass('protocolCount', sortCol, sortDir)}" data-col="protocolCount">Protocols</th>
                         </tr>
                     </thead>
                     <tbody>${rows}</tbody>
@@ -1140,160 +1260,318 @@
             `;
         }
 
-        function updateStats(protocols, chains, categories) {
-            const sortedProtocols = sortData(protocols, 'change', 'desc');
-            const sortedChains = sortData(chains, 'change', 'desc');
-            const sortedCategories = sortData(categories, 'change', 'desc');
+        function renderCategoriesTable(data, sortCol, sortDir, timeframe) {
+            const sorted = sortData(data, sortCol, sortDir);
+            const maxTvl = sorted.length > 0 ? Math.max(...sorted.map(c => c.tvl)) : 0;
 
-            document.getElementById('totalProtocols').textContent = protocols.length;
-            document.getElementById('totalChains').textContent = chains.length;
-            document.getElementById('totalCategories').textContent = categories.length;
-            document.getElementById('topGrowth').textContent = sortedProtocols.length ? formatPercent(sortedProtocols[0].change) : '-';
-            document.getElementById('topChainGrowth').textContent = sortedChains.length ? formatPercent(sortedChains[0].change) : '-';
-            document.getElementById('topCategoryGrowth').textContent = sortedCategories.length ? formatPercent(sortedCategories[0].change) : '-';
+            if (sorted.length === 0) {
+                return '<div class="no-data">No categories found matching criteria.</div>';
+            }
+
+            const rows = sorted.map((c, i) => {
+                const barWidth = maxTvl > 0 ? (c.tvl / maxTvl) * 100 : 0;
+                const isExpanded = state.expandedCategories.has(c.name);
+                const topProtocols = isExpanded ? getTopProtocolsForCategory(c.name, timeframe) : [];
+                
+                return `
+                    <tr class="expandable-row ${isExpanded ? 'expanded' : ''}" 
+                        data-category="${escapeHtml(c.name)}" 
+                        tabindex="0" 
+                        role="button" 
+                        aria-expanded="${isExpanded}">
+                        <td class="rank">
+                            <span class="expand-icon" aria-hidden="true">▶</span>
+                            #${i + 1}
+                        </td>
+                        <td>
+                            <div class="category-name">
+                                <span class="category-icon" aria-hidden="true">${getCategoryIcon(c.name)}</span>
+                                <a href="https://defillama.com/protocols/${getCategorySlug(c.name)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+                                    ${escapeHtml(c.name)}
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span class="tvl">${formatTVL(c.tvl)}</span>
+                                <div class="tvl-bar-container" aria-hidden="true">
+                                    <div class="tvl-bar" style="width: ${barWidth}%"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="change ${getChangeClass(c.change)}">${formatPercent(c.change)}</span></td>
+                        <td><span class="protocol-count">${c.protocolCount}</span></td>
+                    </tr>
+                    <tr class="expanded-content ${isExpanded ? 'show' : ''}" data-category-content="${escapeHtml(c.name)}">
+                        <td colspan="5">
+                            <div class="sub-table-container">
+                                ${isExpanded ? renderSubTable(topProtocols, c.name, timeframe) : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            return `
+                <table id="categoriesTable" role="grid">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th class="sortable ${getSortClass('name', sortCol, sortDir)}" data-col="name">Category</th>
+                            <th class="sortable ${getSortClass('tvl', sortCol, sortDir)}" data-col="tvl">Total TVL</th>
+                            <th class="sortable ${getSortClass('change', sortCol, sortDir)}" data-col="change">Avg Change</th>
+                            <th class="sortable ${getSortClass('protocolCount', sortCol, sortDir)}" data-col="protocolCount">Protocols</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
+        }
+
+        // ============ STATS UPDATE ============
+        function updateStats() {
+            if (!state.rawProtocols) return;
+
+            // Always use 24H timeframe for stats (consistent baseline)
+            const timeframe = CONFIG.TIMEFRAMES.DAY;
+            
+            const processedProtocols = processProtocols(state.rawProtocols, timeframe);
+            const processedChains = processChains(state.rawProtocols, timeframe);
+            const processedCategories = processCategories(state.rawProtocols, timeframe);
+
+            // Sort to get top performers
+            const sortedProtocols = sortData(processedProtocols, 'change', 'desc');
+            const sortedChains = sortData(processedChains, 'change', 'desc');
+            const sortedCategories = sortData(processedCategories, 'change', 'desc');
+
+            // Update counts
+            document.getElementById('totalProtocols').textContent = processedProtocols.length.toLocaleString();
+            document.getElementById('totalChains').textContent = processedChains.length.toLocaleString();
+            document.getElementById('totalCategories').textContent = processedCategories.length.toLocaleString();
+
+            // Update top performers with names
+            if (sortedProtocols.length > 0) {
+                document.getElementById('topGrowth').textContent = formatPercent(sortedProtocols[0].change);
+                document.getElementById('topProtocolName').textContent = sortedProtocols[0].name;
+            } else {
+                document.getElementById('topGrowth').textContent = '-';
+                document.getElementById('topProtocolName').textContent = '-';
+            }
+
+            if (sortedChains.length > 0) {
+                document.getElementById('topChainGrowth').textContent = formatPercent(sortedChains[0].change);
+                document.getElementById('topChainName').textContent = sortedChains[0].name;
+            } else {
+                document.getElementById('topChainGrowth').textContent = '-';
+                document.getElementById('topChainName').textContent = '-';
+            }
+
+            if (sortedCategories.length > 0) {
+                document.getElementById('topCategoryGrowth').textContent = formatPercent(sortedCategories[0].change);
+                document.getElementById('topCategoryName').textContent = sortedCategories[0].name;
+            } else {
+                document.getElementById('topCategoryGrowth').textContent = '-';
+                document.getElementById('topCategoryName').textContent = '-';
+            }
+        }
+
+        // ============ SECTION RENDER FUNCTIONS ============
+        function renderProtocolsSection() {
+            if (!state.rawProtocols) return;
+            
+            const timeframe = state.sectionTimeframes.protocols;
+            const processedProtocols = processProtocols(state.rawProtocols, timeframe);
+            
+            document.getElementById('protocolsContainer').innerHTML = renderProtocolsTable(
+                processedProtocols,
+                state.sortState.protocols.column,
+                state.sortState.protocols.direction
+            );
+        }
+
+        function renderChainsSection() {
+            if (!state.rawProtocols) return;
+            
+            const timeframe = state.sectionTimeframes.chains;
+            const processedChains = processChains(state.rawProtocols, timeframe);
+            
+            document.getElementById('chainsContainer').innerHTML = renderChainsTable(
+                processedChains,
+                state.sortState.chains.column,
+                state.sortState.chains.direction,
+                timeframe
+            );
+        }
+
+        function renderCategoriesSection() {
+            if (!state.rawProtocols) return;
+            
+            const timeframe = state.sectionTimeframes.categories;
+            const processedCategories = processCategories(state.rawProtocols, timeframe);
+            
+            document.getElementById('categoriesContainer').innerHTML = renderCategoriesTable(
+                processedCategories,
+                state.sortState.categories.column,
+                state.sortState.categories.direction,
+                timeframe
+            );
+        }
+
+        function renderAll() {
+            renderProtocolsSection();
+            renderChainsSection();
+            renderCategoriesSection();
+            updateStats();
         }
 
         // ============ EVENT HANDLERS ============
-        document.getElementById('categoriesContainer').addEventListener('click', e => {
-            // Handle sorting
+        function handleSortClick(e, section, renderFn) {
             const th = e.target.closest('th.sortable');
-            if (th) {
-                const col = th.dataset.col;
-                const isSameColumn = sortState.categories.column === col;
-                sortState.categories.direction = isSameColumn && sortState.categories.direction === 'desc' ? 'asc' : 'desc';
-                sortState.categories.column = col;
-                renderAll();
-                return;
-            }
-
-            // Handle row expansion
-            const row = e.target.closest('.expandable-row');
-            if (row && !e.target.closest('a')) {
-                const category = row.dataset.category;
-                if (expandedCategories.has(category)) {
-                    expandedCategories.delete(category);
-                } else {
-                    expandedCategories.add(category);
-                }
-                renderAll();
-            }
-        });
-
-        document.getElementById('protocolsContainer').addEventListener('click', e => {
-            const th = e.target.closest('th.sortable');
-            if (!th) return;
+            if (!th) return false;
 
             const col = th.dataset.col;
-            const isSameColumn = sortState.protocols.column === col;
-            sortState.protocols.direction = isSameColumn && sortState.protocols.direction === 'desc' ? 'asc' : 'desc';
-            sortState.protocols.column = col;
-            renderAll();
-        });
+            const sortState = state.sortState[section];
+            const isSameColumn = sortState.column === col;
+            
+            sortState.direction = isSameColumn && sortState.direction === 'desc' ? 'asc' : 'desc';
+            sortState.column = col;
+            renderFn();
+            return true;
+        }
 
-        document.getElementById('chainsContainer').addEventListener('click', e => {
-            // Handle sorting
-            const th = e.target.closest('th.sortable');
-            if (th) {
-                const col = th.dataset.col;
-                const isSameColumn = sortState.chains.column === col;
-                sortState.chains.direction = isSameColumn && sortState.chains.direction === 'desc' ? 'asc' : 'desc';
-                sortState.chains.column = col;
-                renderAll();
-                return;
-            }
-
-            // Handle row expansion
+        function handleExpandableRowClick(e, expandedSet, renderFn, dataAttr) {
             const row = e.target.closest('.expandable-row');
-            if (row && !e.target.closest('a')) {
-                const chain = row.dataset.chain;
-                if (expandedChains.has(chain)) {
-                    expandedChains.delete(chain);
-                } else {
-                    expandedChains.add(chain);
-                }
-                renderAll();
+            if (!row || e.target.closest('a')) return false;
+
+            const key = row.dataset[dataAttr];
+            if (!key) return false;
+
+            if (expandedSet.has(key)) {
+                expandedSet.delete(key);
+            } else {
+                expandedSet.add(key);
             }
+            renderFn();
+            return true;
+        }
+
+        function handleKeyboardExpand(e, expandedSet, renderFn, dataAttr) {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            
+            const row = e.target.closest('.expandable-row');
+            if (!row) return;
+
+            e.preventDefault();
+            const key = row.dataset[dataAttr];
+            if (!key) return;
+
+            if (expandedSet.has(key)) {
+                expandedSet.delete(key);
+            } else {
+                expandedSet.add(key);
+            }
+            renderFn();
+        }
+
+        // Protocols container events
+        document.getElementById('protocolsContainer').addEventListener('click', e => {
+            handleSortClick(e, 'protocols', renderProtocolsSection);
         });
 
-        // Smooth scroll for navigation
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', e => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                const target = document.getElementById(targetId);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
+        // Chains container events
+        document.getElementById('chainsContainer').addEventListener('click', e => {
+            if (handleSortClick(e, 'chains', renderChainsSection)) return;
+            handleExpandableRowClick(e, state.expandedChains, renderChainsSection, 'chain');
+        });
+
+        document.getElementById('chainsContainer').addEventListener('keydown', e => {
+            handleKeyboardExpand(e, state.expandedChains, renderChainsSection, 'chain');
+        });
+
+        // Categories container events
+        document.getElementById('categoriesContainer').addEventListener('click', e => {
+            if (handleSortClick(e, 'categories', renderCategoriesSection)) return;
+            handleExpandableRowClick(e, state.expandedCategories, renderCategoriesSection, 'category');
+        });
+
+        document.getElementById('categoriesContainer').addEventListener('keydown', e => {
+            handleKeyboardExpand(e, state.expandedCategories, renderCategoriesSection, 'category');
+        });
+
+        // Timeframe button handlers
+        document.querySelectorAll('.timeframe-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const section = btn.dataset.section;
+                const timeframe = btn.dataset.timeframe;
+
+                // Update active state and aria-pressed for this section's buttons
+                document.querySelectorAll(`.timeframe-btn[data-section="${section}"]`).forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-pressed', 'false');
+                });
+                btn.classList.add('active');
+                btn.setAttribute('aria-pressed', 'true');
+
+                // Update timeframe state
+                state.sectionTimeframes[section] = timeframe;
+
+                // Reset sort to change desc when switching timeframe
+                state.sortState[section] = { column: 'change', direction: 'desc' };
+
+                // Re-render only the affected section
+                switch (section) {
+                    case 'protocols':
+                        renderProtocolsSection();
+                        break;
+                    case 'chains':
+                        renderChainsSection();
+                        break;
+                    case 'categories':
+                        renderCategoriesSection();
+                        break;
                 }
             });
         });
 
-        // ============ MAIN RENDER ============
-        function renderAll() {
-            if (!rawProtocols || !rawChains) return;
-
-            const processedProtocols = processProtocols(rawProtocols, currentTimeframe);
-            const processedChains = processChains(rawChains, currentTimeframe);
-            const processedCategories = processCategories(rawProtocols, currentTimeframe);
-
-            document.getElementById('protocolsContainer').innerHTML = renderProtocolsTable(
-                processedProtocols,
-                sortState.protocols.column,
-                sortState.protocols.direction
-            );
-
-            document.getElementById('categoriesContainer').innerHTML = renderCategoriesTable(
-                processedCategories,
-                sortState.categories.column,
-                sortState.categories.direction
-            );
-
-            document.getElementById('chainsContainer').innerHTML = renderChainsTable(
-                processedChains,
-                sortState.chains.column,
-                sortState.chains.direction
-            );
-
-            updateStats(processedProtocols, processedChains, processedCategories);
-        }
-
         // ============ DATA LOADING ============
         async function loadData(forceRefresh = false) {
-            if (isLoading) return;
+            if (state.isLoading) return;
 
-            const pc = document.getElementById('protocolsContainer');
-            const catC = document.getElementById('categoriesContainer');
-            const cc = document.getElementById('chainsContainer');
+            const containers = ['protocolsContainer', 'chainsContainer', 'categoriesContainer'];
             const refreshBtn = document.getElementById('refreshBtn');
 
             try {
-                isLoading = true;
+                state.isLoading = true;
                 refreshBtn.disabled = true;
                 refreshBtn.textContent = '↻ Loading...';
 
-                if (!rawProtocols || !rawChains || forceRefresh) {
+                if (!state.rawProtocols || forceRefresh) {
                     const loadingHtml = `
                         <div class="loading">
                             <div class="spinner"></div>
                             <p>Loading data from DefiLlama...</p>
                         </div>
                     `;
-                    pc.innerHTML = catC.innerHTML = cc.innerHTML = loadingHtml;
+                    containers.forEach(id => {
+                        document.getElementById(id).innerHTML = loadingHtml;
+                    });
 
-                    // Clear expanded states on refresh
-                    expandedChains.clear();
-                    expandedCategories.clear();
+                    // Clear state on refresh
+                    state.expandedChains.clear();
+                    state.expandedCategories.clear();
+                    clearCache();
 
-                    const [protocolsResponse, chainsResponse] = await Promise.all([
-                        fetch('https://api.llama.fi/protocols'),
-                        fetch('https://api.llama.fi/v2/chains')
-                    ]);
+                    const response = await fetch(CONFIG.API_URL);
 
-                    if (!protocolsResponse.ok || !chainsResponse.ok) {
-                        throw new Error('API request failed');
+                    if (!response.ok) {
+                        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
                     }
 
-                    rawProtocols = await protocolsResponse.json();
-                    rawChains = await chainsResponse.json();
+                    state.rawProtocols = await response.json();
+
+                    if (!Array.isArray(state.rawProtocols)) {
+                        throw new Error('Invalid data format received from API');
+                    }
                 }
 
                 renderAll();
@@ -1307,33 +1585,19 @@
                         <button class="retry-btn" onclick="loadData(true)">↻ Retry</button>
                     </div>
                 `;
-                pc.innerHTML = catC.innerHTML = cc.innerHTML = errorHtml;
+                containers.forEach(id => {
+                    document.getElementById(id).innerHTML = errorHtml;
+                });
             } finally {
-                isLoading = false;
+                state.isLoading = false;
                 refreshBtn.disabled = false;
-                refreshBtn.textContent = '↻ Refresh';
+                refreshBtn.textContent = '↻ Refresh Data';
             }
         }
 
         // ============ REFRESH BUTTON ============
         document.getElementById('refreshBtn').addEventListener('click', () => {
             loadData(true);
-        });
-
-        // ============ TIMEFRAME SWITCH ============
-        document.querySelectorAll('.timeframe-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.timeframe-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentTimeframe = btn.dataset.timeframe;
-
-                // Reset sort state when changing timeframe
-                sortState.protocols = { column: 'change', direction: 'desc' };
-                sortState.chains = { column: 'change', direction: 'desc' };
-                sortState.categories = { column: 'change', direction: 'desc' };
-
-                renderAll();
-            });
         });
 
         // ============ INIT ============
