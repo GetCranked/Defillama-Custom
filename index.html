@@ -108,6 +108,10 @@
             gap: 10px;
         }
 
+        .section-icon {
+            font-size: 1.5rem;
+        }
+
         .loading {
             text-align: center;
             padding: 60px;
@@ -252,6 +256,35 @@
             white-space: nowrap;
         }
 
+        .category-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-icon {
+            font-size: 1.2rem;
+        }
+
+        .category-link {
+            color: #e4e4e4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .category-link:hover {
+            color: #00d4ff;
+        }
+
+        .protocol-count {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
         .error {
             text-align: center;
             padding: 40px;
@@ -328,6 +361,27 @@
             text-decoration: none;
         }
 
+        .tvl-bar-container {
+            width: 100px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .tvl-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .tvl-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
         @media (max-width: 768px) {
             header h1 {
                 font-size: 1.8rem;
@@ -346,6 +400,10 @@
                 width: 22px;
                 height: 22px;
             }
+
+            .tvl-bar-container {
+                width: 60px;
+            }
         }
     </style>
 </head>
@@ -353,7 +411,7 @@
     <div class="container">
         <header>
             <h1>DeFi TVL Growth Tracker</h1>
-            <p>Track protocols and chains with the highest TVL growth</p>
+            <p>Track protocols, chains, and categories with the highest TVL growth</p>
         </header>
 
         <div class="controls">
@@ -373,6 +431,10 @@
                 <div class="label">Chains (≥$10M)</div>
             </div>
             <div class="stat-card">
+                <div class="value" id="totalCategories">-</div>
+                <div class="label">Categories</div>
+            </div>
+            <div class="stat-card">
                 <div class="value" id="topGrowth">-</div>
                 <div class="label">Top Protocol Growth</div>
             </div>
@@ -380,10 +442,24 @@
                 <div class="value" id="topChainGrowth">-</div>
                 <div class="label">Top Chain Growth</div>
             </div>
+            <div class="stat-card">
+                <div class="value" id="topCategoryGrowth">-</div>
+                <div class="label">Top Category Growth</div>
+            </div>
         </div>
 
         <div class="section">
-            <h2>Top Growing Protocols (TVL ≥ $1M)</h2>
+            <h2><span class="section-icon">📊</span> Category Performance</h2>
+            <div class="table-container" id="categoriesContainer">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading categories...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><span class="section-icon">🚀</span> Top Growing Protocols (TVL ≥ $1M)</h2>
             <div class="table-container" id="protocolsContainer">
                 <div class="loading">
                     <div class="spinner"></div>
@@ -393,7 +469,7 @@
         </div>
 
         <div class="section">
-            <h2>Top Growing Chains (TVL ≥ $10M)</h2>
+            <h2><span class="section-icon">⛓️</span> Top Growing Chains (TVL ≥ $10M)</h2>
             <div class="table-container" id="chainsContainer">
                 <div class="loading">
                     <div class="spinner"></div>
@@ -415,6 +491,43 @@
             PROTOCOL_MIN_TVL: 1_000_000,
             CHAIN_MIN_TVL: 10_000_000,
             TOP_RESULTS: 50
+        };
+
+        // Category icons mapping
+        const CATEGORY_ICONS = {
+            'Dexes': '🔄',
+            'DEX': '🔄',
+            'Lending': '🏦',
+            'CDP': '💵',
+            'Bridge': '🌉',
+            'Derivatives': '📈',
+            'Yield': '🌾',
+            'Yield Aggregator': '🌾',
+            'Liquid Staking': '💧',
+            'Liquidity manager': '💧',
+            'Services': '🛠️',
+            'Staking': '🥩',
+            'Farm': '🚜',
+            'Reserve Currency': '💰',
+            'Algo-Stables': '🔢',
+            'Insurance': '🛡️',
+            'Options': '📊',
+            'Indexes': '📑',
+            'Synthetics': '🧪',
+            'Gaming': '🎮',
+            'NFT Lending': '🖼️',
+            'NFT Marketplace': '🏪',
+            'Payments': '💳',
+            'Privacy': '🔒',
+            'Launchpad': '🚀',
+            'Prediction Market': '🎯',
+            'RWA': '🏠',
+            'RWA Lending': '🏠',
+            'Leveraged Farming': '⚡',
+            'Cross Chain': '🔗',
+            'SoFi': '📱',
+            'Oracle': '🔮',
+            'Other': '📦'
         };
 
         // Chain name → DefiLlama slug mapping
@@ -464,7 +577,8 @@
 
         const sortState = {
             protocols: { column: 'change', direction: 'desc' },
-            chains: { column: 'change', direction: 'desc' }
+            chains: { column: 'change', direction: 'desc' },
+            categories: { column: 'change', direction: 'desc' }
         };
 
         // ============ UTILITIES ============
@@ -497,6 +611,14 @@
             return timeframe === '1d' ? 'change_1d' : timeframe === '7d' ? 'change_7d' : 'change_1m';
         }
 
+        function getCategoryIcon(category) {
+            return CATEGORY_ICONS[category] || CATEGORY_ICONS['Other'];
+        }
+
+        function getCategorySlug(category) {
+            return category.toLowerCase().replace(/\s+/g, '-').replace(/[^^a-z0-9-]/g, '');
+        }
+
         // ============ DATA PROCESSING ============
         function processProtocols(protocols, timeframe) {
             const field = getChangeField(timeframe);
@@ -526,6 +648,45 @@
                 }));
         }
 
+        function processCategories(protocols, timeframe) {
+            const field = getChangeField(timeframe);
+            const categoryMap = new Map();
+
+            // Only include protocols that meet the minimum TVL and have valid change data
+            protocols
+                .filter(p => p.tvl >= CONFIG.PROTOCOL_MIN_TVL && p[field] != null)
+                .forEach(p => {
+                    const category = p.category || 'Other';
+                    
+                    if (!categoryMap.has(category)) {
+                        categoryMap.set(category, {
+                            name: category,
+                            totalTvl: 0,
+                            weightedChangeSum: 0,
+                            protocolCount: 0,
+                            protocols: []
+                        });
+                    }
+
+                    const cat = categoryMap.get(category);
+                    cat.totalTvl += p.tvl;
+                    cat.weightedChangeSum += p.tvl * p[field];
+                    cat.protocolCount += 1;
+                    cat.protocols.push(p.name);
+                });
+
+            // Calculate weighted average change for each category
+            return Array.from(categoryMap.values())
+                .map(cat => ({
+                    name: cat.name,
+                    tvl: cat.totalTvl,
+                    change: cat.totalTvl > 0 ? cat.weightedChangeSum / cat.totalTvl : 0,
+                    protocolCount: cat.protocolCount,
+                    topProtocols: cat.protocols.slice(0, 5)
+                }))
+                .filter(cat => cat.tvl > 0);
+        }
+
         // ============ SORTING ============
         function sortData(data, sortCol, sortDir) {
             return [...data].sort((a, b) => {
@@ -549,6 +710,58 @@
         }
 
         // ============ RENDERING ============
+        function renderCategoriesTable(data, sortCol, sortDir) {
+            const sorted = sortData(data, sortCol, sortDir);
+            const maxTvl = Math.max(...sorted.map(c => c.tvl));
+
+            if (sorted.length === 0) {
+                return '<div class="loading"><p>No categories found.</p></div>';
+            }
+
+            const rows = sorted.map((c, i) => {
+                const barWidth = maxTvl > 0 ? (c.tvl / maxTvl) * 100 : 0;
+                
+                return `
+                    <tr>
+                        <td class="rank">#${i + 1}</td>
+                        <td>
+                            <div class="category-name">
+                                <span class="category-icon">${getCategoryIcon(c.name)}</span>
+                                <a class="category-link" href="https://defillama.com/protocols/${getCategorySlug(c.name)}" target="_blank">
+                                    ${escapeHtml(c.name)}
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="tvl-cell">
+                                <span class="tvl">${formatTVL(c.tvl)}</span>
+                                <div class="tvl-bar-container">
+                                    <div class="tvl-bar" style="width: ${barWidth}%"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="change ${getChangeClass(c.change)}">${formatPercent(c.change)}</span></td>
+                        <td><span class="protocol-count">${c.protocolCount}</span></td>
+                    </tr>
+                `;
+            }).join('');
+
+            return `
+                <table id="categoriesTable">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th class="sortable ${sortCol === 'name' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="name">Category</th>
+                            <th class="sortable ${sortCol === 'tvl' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="tvl">Total TVL</th>
+                            <th class="sortable ${sortCol === 'change' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="change">Avg Change</th>
+                            <th class="sortable ${sortCol === 'protocolCount' ? (sortDir === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-col="protocolCount">Protocols</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
+        }
+
         function renderProtocolsTable(data, sortCol, sortDir) {
             const sorted = sortData(data, sortCol, sortDir).slice(0, CONFIG.TOP_RESULTS);
 
@@ -627,17 +840,31 @@
             `;
         }
 
-        function updateStats(protocols, chains) {
+        function updateStats(protocols, chains, categories) {
             const sortedProtocols = sortData(protocols, 'change', 'desc');
             const sortedChains = sortData(chains, 'change', 'desc');
+            const sortedCategories = sortData(categories, 'change', 'desc');
 
             document.getElementById('totalProtocols').textContent = protocols.length;
             document.getElementById('totalChains').textContent = chains.length;
+            document.getElementById('totalCategories').textContent = categories.length;
             document.getElementById('topGrowth').textContent = sortedProtocols.length ? formatPercent(sortedProtocols[0].change) : '-';
             document.getElementById('topChainGrowth').textContent = sortedChains.length ? formatPercent(sortedChains[0].change) : '-';
+            document.getElementById('topCategoryGrowth').textContent = sortedCategories.length ? formatPercent(sortedCategories[0].change) : '-';
         }
 
         // ============ EVENT HANDLERS ============
+        document.getElementById('categoriesContainer').addEventListener('click', e => {
+            const th = e.target.closest('th.sortable');
+            if (!th) return;
+
+            const col = th.dataset.col;
+            const isSameColumn = sortState.categories.column === col;
+            sortState.categories.direction = isSameColumn && sortState.categories.direction === 'desc' ? 'asc' : 'desc';
+            sortState.categories.column = col;
+            renderAll();
+        });
+
         document.getElementById('protocolsContainer').addEventListener('click', e => {
             const th = e.target.closest('th.sortable');
             if (!th) return;
@@ -666,6 +893,13 @@
 
             const processedProtocols = processProtocols(rawProtocols, currentTimeframe);
             const processedChains = processChains(rawChains, currentTimeframe);
+            const processedCategories = processCategories(rawProtocols, currentTimeframe);
+
+            document.getElementById('categoriesContainer').innerHTML = renderCategoriesTable(
+                processedCategories,
+                sortState.categories.column,
+                sortState.categories.direction
+            );
 
             document.getElementById('protocolsContainer').innerHTML = renderProtocolsTable(
                 processedProtocols,
@@ -679,13 +913,14 @@
                 sortState.chains.direction
             );
 
-            updateStats(processedProtocols, processedChains);
+            updateStats(processedProtocols, processedChains, processedCategories);
         }
 
         // ============ DATA LOADING ============
         async function loadData(forceRefresh = false) {
             if (isLoading) return;
 
+            const catC = document.getElementById('categoriesContainer');
             const pc = document.getElementById('protocolsContainer');
             const cc = document.getElementById('chainsContainer');
             const refreshBtn = document.getElementById('refreshBtn');
@@ -696,12 +931,13 @@
                 refreshBtn.textContent = '↻ Loading...';
 
                 if (!rawProtocols || !rawChains || forceRefresh) {
-                    pc.innerHTML = cc.innerHTML = `
+                    const loadingHtml = `
                         <div class="loading">
                             <div class="spinner"></div>
                             <p>Loading data from DefiLlama...</p>
                         </div>
                     `;
+                    catC.innerHTML = pc.innerHTML = cc.innerHTML = loadingHtml;
 
                     const [protocolsResponse, chainsResponse] = await Promise.all([
                         fetch('https://api.llama.fi/protocols'),
@@ -727,7 +963,7 @@
                         <button class="retry-btn" onclick="loadData(true)">↻ Retry</button>
                     </div>
                 `;
-                pc.innerHTML = cc.innerHTML = errorHtml;
+                catC.innerHTML = pc.innerHTML = cc.innerHTML = errorHtml;
             } finally {
                 isLoading = false;
                 refreshBtn.disabled = false;
@@ -750,6 +986,7 @@
                 // Reset sort state when changing timeframe
                 sortState.protocols = { column: 'change', direction: 'desc' };
                 sortState.chains = { column: 'change', direction: 'desc' };
+                sortState.categories = { column: 'change', direction: 'desc' };
 
                 renderAll();
             });
